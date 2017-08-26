@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
+//
 /*
  * We still lack the BaseEntity interface, the Notes subclasses, the Tags and Users entities and relationships with Note, etc. This class has been built with testing purposes
  */
@@ -23,7 +23,7 @@ public class Note {
       this.creationDate = creation_date;
       this.title = title;
    }
-/////////////
+//
    public Note( ) {
       super();
    }
