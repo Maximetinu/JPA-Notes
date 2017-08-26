@@ -4,16 +4,12 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.jpanotesproject.eclipselink.entity.Note</class>
 		<properties>
-			<property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.45:3306/notesdb"/>
 			<property name="javax.persistence.jdbc.user" value="lifka"/>
 			<property name="javax.persistence.jdbc.password" value="javiguapo1"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="eclipselink.logging.level" value="FINE"/>
 			<property name="eclipselink.ddl-generation" value="create-tables"/>
-			<property name="eclipselink.create-ddl-jdbc-file-name" value="createDDL_ddlGeneration.jdbc"/>
-			<property name="eclipselink.drop-ddl-jdbc-file-name" value="dropDDL_ddlGeneration.jdbc"/>
-			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
 		</properties>
 	</persistence-unit>
 </persistence>
