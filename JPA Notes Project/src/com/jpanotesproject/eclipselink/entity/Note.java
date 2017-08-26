@@ -23,7 +23,7 @@ public class Note {
       this.creationDate = creation_date;
       this.title = title;
    }
-
+//
    public Note( ) {
       super();
    }
