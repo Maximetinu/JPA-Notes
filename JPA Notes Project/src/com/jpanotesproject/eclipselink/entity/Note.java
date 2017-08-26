@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 /*
  * We still lack the BaseEntity interface, the Notes subclasses, the Tags and Users entities and relationships with Note, etc. This class has been built with testing purposes
- */
+ *///
 @Entity
 @Table
 public class Note {
