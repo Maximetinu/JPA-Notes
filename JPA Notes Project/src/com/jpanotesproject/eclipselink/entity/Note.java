@@ -10,14 +10,16 @@ import javax.persistence.Table;
  *///
 @Entity
 @Table
-public class Note {
-
-   @Id
-   @GeneratedValue(strategy = GenerationType.AUTO) 	
-   private String title;
-   private int creationDate;
+public abstract class Note {
+	
+   @Id 
+   @GeneratedValue(strategy=GenerationType.IDENTITY)
+   private Long id;
    
-   public Note(int creation_date, String title) {
+   private String title;
+   private String creationDate;
+   
+   public Note(String creation_date, String title) {
       super( );
       this.creationDate = creation_date;
       this.title = title;
@@ -27,11 +29,11 @@ public class Note {
       super();
    }
    
-   public int getCreationDate( ) {
+   public String getCreationDate( ) {
       return creationDate;
    }
    
-   public void setCreationDate(int creationDate) {
+   public void setCreationDate(String creationDate) {
       this.creationDate = creationDate;
    }
    

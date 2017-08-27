@@ -19,12 +19,12 @@ public class NotesCRUDService {
 	      
 	    EntityManager entitymanager = emfactory.createEntityManager( );
 	    entitymanager.getTransaction( ).begin( );
-
+/*
 	    Note note = new Note( ); 
-	    note.setCreationDate( 1201 );
+	    note.setCreationDate( "1201" );
 	    note.setTitle( "Gopal" );
-	      
-	    entitymanager.persist( note );
+	      */
+	 //   entitymanager.persist( note );
 	    entitymanager.getTransaction( ).commit( );
 
 	    entitymanager.close( );
@@ -50,7 +50,7 @@ public class NotesCRUDService {
 	      
 	    //before update
 	    System.out.println( note );
-	    note.setCreationDate( 1299 );
+	    note.setCreationDate( "1299" );
 	    entitymanager.getTransaction( ).commit( );
 	      
 	    //after update
