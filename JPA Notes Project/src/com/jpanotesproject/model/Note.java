@@ -3,25 +3,23 @@ package com.jpanotesproject.model;
 import java.util.ArrayList;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 /*
  * We still lack the BaseEntity interface, the Notes subclasses, the Tags and Users entities and relationships with Note, etc. This class has been built with testing purposes
  *///
 @Entity
 @Table
-public abstract class Note {
-	
-   @Id 
-   @GeneratedValue(strategy=GenerationType.IDENTITY)
-   private Long id;
+public abstract class Note extends BaseEntity{
    
    private String title;
    private String creationDate;
+   @OneToOne
    private User author;
+   @OneToMany
    private ArrayList<User> users_can_write;
+   @OneToMany
    private ArrayList<User> users_can_read;
    
    
