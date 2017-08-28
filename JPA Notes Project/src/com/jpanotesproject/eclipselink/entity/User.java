@@ -1,5 +1,7 @@
 package com.jpanotesproject.eclipselink.entity;
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,6 +19,8 @@ public class User {
 	   private String email;
 	   private String registration_date;
 	   
+	   private ArrayList<Note> notes;
+	   
 	   public User(String name, String password, String email, String registration_date) {
 	      super( );
 	      this.name = name;
@@ -27,5 +31,9 @@ public class User {
 	   
 	   public User() {
 		      super();
+	   }
+	   
+	   public void addNote(Note note) {
+		   notes.add(note);
 	   }
 }
