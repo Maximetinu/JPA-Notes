@@ -1,6 +1,6 @@
 package com.jpanotesproject.IO;
 
-import com.jpanotesproject.eclipselink.service.NotesCRUDService;
+import com.jpanotesproject.daos.NotesCRUDService;
 
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)

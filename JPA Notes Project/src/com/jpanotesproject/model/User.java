@@ -1,4 +1,4 @@
-package com.jpanotesproject.eclipselink.entity;
+package com.jpanotesproject.model;
 
 import java.util.ArrayList;
 

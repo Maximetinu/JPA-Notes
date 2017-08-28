@@ -1,9 +1,10 @@
-package com.jpanotesproject.eclipselink.service;
+package com.jpanotesproject.daos;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import com.jpanotesproject.eclipselink.entity.Note;
+
+import com.jpanotesproject.model.Note;
 
 /*
  * This class is a test. It is expected that, maybe, implement a CRUD Interface, or a BaseService interface
