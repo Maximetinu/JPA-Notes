@@ -1,5 +1,7 @@
 package com.jpanotesproject.eclipselink.entity;
 
+import java.util.ArrayList;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -18,22 +20,54 @@ public abstract class Note {
    
    private String title;
    private String creationDate;
+   private User author;
+   private ArrayList<User> users_can_write;
+   private ArrayList<User> users_can_read;
    
-   public Note(String creation_date, String title) {
+   
+   public Note(User author, String creation_date, String title) {
       super( );
-      this.creationDate = creation_date;
+      this.author = author;
       this.title = title;
+      
+      addPermissionWriteToUser(author);
+      addPermissionReadToUser(author);
+      setCreationDate(creation_date);
    }
    
    public Note( ) {
       super();
    }
    
+   public void addPermissionWriteToUser(User user) {
+	   users_can_write.add(user);
+   }
+   
+   public void addPermissionReadToUser(User user) {
+	   users_can_read.add(user);
+   } 
+
+   public void removePermissionWriteToUser(User user) {
+	   users_can_write.remove(user);
+   }
+
+   public void removePermissionReadToUser(User user) {
+	   users_can_read.remove(user);
+   }
+   
+   public boolean isPossibleRead(User user) {
+	   return users_can_read.contains(user);
+   }
+   
+   public boolean isPossibleWrite(User user) {
+	   return users_can_write.contains(user);
+   }
+   
    public String getCreationDate( ) {
       return creationDate;
    }
    
-   public void setCreationDate(String creationDate) {
+   private void setCreationDate(String creationDate) {
       this.creationDate = creationDate;
    }
    
