@@ -19,7 +19,7 @@ public class Application {
 		notesService.create();
 		notesService.read();
 		notesService.update();
-		//notesService.delete();
+		///notesService.delete();
 
 	}
 
