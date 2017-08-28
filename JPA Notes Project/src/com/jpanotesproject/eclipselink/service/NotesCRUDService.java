@@ -50,7 +50,7 @@ public class NotesCRUDService {
 	      
 	    //before update
 	    System.out.println( note );
-	    note.setCreationDate( "1299" );
+//	    note.setCreationDate( "1299" );
 	    entitymanager.getTransaction( ).commit( );
 	      
 	    //after update
