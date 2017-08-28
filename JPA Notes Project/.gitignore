@@ -1,4 +1,5 @@
 ### ECLIPSE .GITIGNORE
+build/
 .metadata
 bin/
 tmp/
