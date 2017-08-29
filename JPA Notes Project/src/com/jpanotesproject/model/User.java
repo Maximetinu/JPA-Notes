@@ -2,10 +2,13 @@ package com.jpanotesproject.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -27,11 +30,11 @@ public class User extends BaseEntity {
 
 	@ElementCollection
 	@Column(name = "SHARED_NOTES")
-	private HashMap<Note, Integer> sharedNotes = new HashMap<Note, Integer>();
+	private Map<Note, Integer> sharedNotes = new HashMap<Note, Integer>();
 
-	//@ElementCollection
+	@ManyToMany
 	@Column(name = "TAGS")
-	private ArrayList<Tag> tags = new ArrayList<Tag>();
+	private List<Tag> tags = new ArrayList<Tag>();
 
 	@OneToMany
 	private ArrayList<Note> ownNotes;
