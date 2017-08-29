@@ -1,17 +1,19 @@
 package com.jpanotesproject.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
+
+//import java.util.HashMap;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
+//import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+//import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "NOTE")
-//@Inheritance(strategy=InheritanceType.JOINED)
 public /* abstract */ class Note extends BaseEntity {
 
 	@Column(name = "TITLE")
@@ -21,31 +23,48 @@ public /* abstract */ class Note extends BaseEntity {
 	@Column(name = "LAST_EDIT_DATE")
 	private java.sql.Timestamp lastEditDate;;
 
-	@ManyToOne
-	@Column(name = "AUTHOR")
-	private User author;
+	//@ManyToOne
+	//@Column(name = "AUTHOR")
+	//private User author;
 
-	@ElementCollection
-	@Column(name = "SHARED_USERS")
-	private HashMap<User, Integer> sharedUsers;
+	//@ElementCollection
+	//@Column(name = "SHARED_USERS")
+	//private HashMap<User, Integer> sharedUsers;
+	
+	@ManyToMany
+	private List<Tag> tags;
 
-	public Note(User author, String title) {
+	public Note(/*User author,*/ String title) {
 		super();
-		this.author = author;
+		//this.author = author;
 		this.title = title;
 		
 		long now = new java.util.Date().getTime();
 		this.creationDate = new java.sql.Timestamp(now);
 		this.lastEditDate = creationDate;
 		
-		sharedUsers = new HashMap<User, Integer>();
+		tags = new ArrayList<Tag>();
+		
+		//sharedUsers = new HashMap<User, Integer>();
+	}
+	
+	public void addTag(Tag t) {
+		tags.add(t);
+	}
+	
+	public void removeTag(Tag t) {
+		tags.remove(t);
+	}
+	
+	public List<Tag> getTagsList(){
+		return tags;
 	}
 
 	public Note() {
 		super();
 	}
 	
-	public boolean canRead(User user) {
+	/*public boolean canRead(User user) {
 		return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
 	}
 
@@ -58,7 +77,7 @@ public /* abstract */ class Note extends BaseEntity {
 			sharedUsers.put(user, permissionLevel);
 		else
 			sharedUsers.remove(user);
-	}
+	}*/
 
 	public java.sql.Timestamp getCreationDate() {
 		return creationDate;
