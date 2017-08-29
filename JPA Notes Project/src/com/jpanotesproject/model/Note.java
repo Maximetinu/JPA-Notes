@@ -1,7 +1,6 @@
 package com.jpanotesproject.model;
 
 import java.util.HashMap;
-
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -12,7 +11,8 @@ import javax.persistence.Table;
 public /* abstract */ class Note extends BaseEntity {
 	
 	private String title;
-	private String creationDate;
+	private java.sql.Timestamp creationDate;
+	private java.sql.Timestamp lastEditDate;;
 
 	@ManyToOne
 	private User author;
@@ -20,11 +20,14 @@ public /* abstract */ class Note extends BaseEntity {
 	@ElementCollection
 	private HashMap<User, Integer> sharedUsers;
 
-	public Note(User author, String creation_date, String title) {
+	public Note(User author, String title) {
 		super();
 		this.author = author;
 		this.title = title;
-		creationDate = creation_date;
+		
+		long now = new java.util.Date().getTime();
+		this.creationDate = new java.sql.Timestamp(now);
+		this.lastEditDate = creationDate;
 		
 		sharedUsers = new HashMap<User, Integer>();
 	}
@@ -48,12 +51,17 @@ public /* abstract */ class Note extends BaseEntity {
 			sharedUsers.remove(user);
 	}
 
-	public String getCreationDate() {
+	public java.sql.Timestamp getCreationDate() {
 		return creationDate;
 	}
-
-	private void setCreationDate(String creationDate) {
-		this.creationDate = creationDate;
+	
+	private void updateLastEditDate() {
+		long now = new java.util.Date().getTime();
+		this.lastEditDate = new java.sql.Timestamp(now);
+	}
+	
+	public java.sql.Timestamp getLastEditDate(){
+		return lastEditDate;
 	}
 
 	public String getTitle() {
@@ -62,6 +70,7 @@ public /* abstract */ class Note extends BaseEntity {
 
 	public void setTitle(String title) {
 		this.title = title;
+		this.updateLastEditDate();
 	}
 
 	@Override
