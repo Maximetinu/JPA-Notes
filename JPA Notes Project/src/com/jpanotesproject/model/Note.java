@@ -5,11 +5,13 @@ import java.util.HashMap;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.Inheritance;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "NOTE")
+//@Inheritance(strategy=InheritanceType.JOINED)
 public /* abstract */ class Note extends BaseEntity {
 
 	@Column(name = "TITLE")

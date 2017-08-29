@@ -27,7 +27,11 @@ public class User extends BaseEntity {
 
 	@ElementCollection
 	@Column(name = "SHARED_NOTES")
-	private HashMap<Note, Integer> sharedNotes;
+	private HashMap<Note, Integer> sharedNotes = new HashMap<Note, Integer>();
+
+	//@ElementCollection
+	@Column(name = "TAGS")
+	private ArrayList<Tag> tags = new ArrayList<Tag>();
 
 	@OneToMany
 	private ArrayList<Note> ownNotes;
