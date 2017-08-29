@@ -19,7 +19,7 @@ public class User extends BaseEntity {
 	@Column(name = "PASSWORD")
 	private String password;
 	
-	@Column(name = "EMAIL")
+	@Column(name = "EMAIL", unique = true)
 	private String email;
 
 	@Column(name = "RESGISTRATION_DATE")
