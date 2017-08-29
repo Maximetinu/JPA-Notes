@@ -1,23 +1,30 @@
 package com.jpanotesproject.model;
 
 import java.util.HashMap;
+
+import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "NOTE")
 public /* abstract */ class Note extends BaseEntity {
-	
+
+	@Column(name = "TITLE")
 	private String title;
+	@Column(name = "CREATION_DATE")
 	private java.sql.Timestamp creationDate;
+	@Column(name = "LAST_EDIT_DATE")
 	private java.sql.Timestamp lastEditDate;;
 
 	@ManyToOne
+	@Column(name = "AUTHOR")
 	private User author;
 
 	@ElementCollection
+	@Column(name = "SHARED_USERS")
 	private HashMap<User, Integer> sharedUsers;
 
 	public Note(User author, String title) {

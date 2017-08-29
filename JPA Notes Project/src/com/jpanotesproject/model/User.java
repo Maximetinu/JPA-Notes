@@ -10,17 +10,23 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table
+@Table(name = "USER")
 public class User extends BaseEntity {
 
-	@Column(unique = true)
+	@Column(name = "USERNAME", unique = true)
 	private String username;
 
+	@Column(name = "PASSWORD")
 	private String password;
+	
+	@Column(name = "EMAIL")
 	private String email;
+
+	@Column(name = "RESGISTRATION_DATE")
 	private java.sql.Timestamp registrationDate;
 
 	@ElementCollection
+	@Column(name = "SHARED_NOTES")
 	private HashMap<Note, Integer> sharedNotes;
 
 	@OneToMany
