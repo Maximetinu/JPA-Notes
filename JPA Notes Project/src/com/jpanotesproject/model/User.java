@@ -6,7 +6,6 @@ import java.util.HashMap;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -19,7 +18,7 @@ public class User extends BaseEntity {
 
 	private String password;
 	private String email;
-	private String registration_date;
+	private java.sql.Timestamp registrationDate;
 
 	@ElementCollection
 	private HashMap<Note, Integer> sharedNotes;
@@ -27,12 +26,14 @@ public class User extends BaseEntity {
 	@OneToMany
 	private ArrayList<Note> ownNotes;
 
-	public User(String name, String password, String email, String registration_date) {
+	public User(String name, String password, String email) {
 		super();
 		this.username = name;
 		this.password = password;
 		this.email = email;
-		this.registration_date = registration_date;
+
+		long now = new java.util.Date().getTime();
+		this.registrationDate = new java.sql.Timestamp(now);
 	}
 
 	public User() {
@@ -58,5 +59,9 @@ public class User extends BaseEntity {
 			sharedNotes.put(note, permissionLevel);
 		else
 			sharedNotes.remove(note);
+	}
+	
+	public java.sql.Timestamp getRegistrationDate(){
+		return registrationDate;
 	}
 }
