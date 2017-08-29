@@ -1,6 +1,11 @@
 package com.jpanotesproject.model;
 
+import javax.persistence.Column;
+import javax.persistence.Table;
+
+@Table(name = "TAG")
 public class Tag extends BaseEntity{
+	@Column(name = "TAG_TEXT")
 	private String tagText;
 	
 	public Tag() {
