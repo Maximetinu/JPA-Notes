@@ -13,7 +13,7 @@ public abstract class BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Basic(optional = false)
-    @Column(name = "id", nullable = false, columnDefinition = "BIGINT UNSIGNED")
+    @Column(name = "ID", nullable = false, columnDefinition = "BIGINT UNSIGNED")
     protected Long id;
  
     public Long getId() {

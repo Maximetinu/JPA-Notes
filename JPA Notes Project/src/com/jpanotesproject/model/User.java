@@ -11,6 +11,7 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
 import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -33,10 +34,11 @@ public class User extends BaseEntity {
 
 	@ElementCollection(fetch=FetchType.EAGER)
     @MapKey
-    @CollectionTable
+    @CollectionTable(name="USER_SHARED_NOTES")
 	private Map<Note, Integer> sharedNotes;
 
 	@OneToMany
+	@JoinTable(name="USER_OWN_NOTES")
 	private List<Note> ownNotes;
 
 	public User(String name, String password, String email) {

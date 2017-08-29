@@ -11,6 +11,7 @@ import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapKey;
@@ -28,15 +29,19 @@ public /* abstract */ class Note extends BaseEntity {
 	private java.sql.Timestamp lastEditDate;;
 
 	@ManyToOne
-	@JoinColumn
+	@JoinColumn(name = "AUTHOR")
 	private User author;
 
 	@ElementCollection(fetch=FetchType.EAGER)
     @MapKey
-    @CollectionTable
+    @CollectionTable(name = "NOTE_SHARED_USERS")
 	private Map<User, Integer> sharedUsers;
 	
 	@ManyToMany
+	@JoinTable(
+		      name="NOTE_TAGS")//,
+		      //joinColumns=@JoinColumn(name="EMP_ID", referencedColumnName="ID"),
+		      //inverseJoinColumns=@JoinColumn(name="PROJ_ID", referencedColumnName="ID"))
 	private List<Tag> tags;
 
 	public Note(User author, String title) {
