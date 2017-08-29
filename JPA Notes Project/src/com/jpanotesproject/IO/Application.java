@@ -13,36 +13,25 @@ import com.jpanotesproject.model.*;
  * ATM it is a testing main
  */
 public class Application {
-	
-	static EntityManager em;
 
 	public static void main(String[] args) {
 		
 		// Tag entity working
 		// TODO: Uncomment from persistence.xml User and Note (one by one), debug and correct
 		
-		initEntityManager();
-
-		Tag t = new Tag("taggy");
-		TagDAO tDAO = new TagDAO(em);
-		tDAO.persist(t);
-		
-		commitChanges();
-		closeEntityManager();	    
-	}
-	
-	private static void commitChanges() {
-		em.getTransaction( ).commit( );
-	}
-	
-	private static void initEntityManager() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
 	    EntityManager em = emfactory.createEntityManager( );
 	    em.getTransaction( ).begin( );
-	}
-	
-	private static void closeEntityManager() {
-		em.close( );
+
+		Tag t = new Tag("anotherTag");
+		
+		TagDAO tDAO = new TagDAO(em);
+		
+		tDAO.persist(t);
+		
+		em.getTransaction( ).commit( );
+
+	    em.close( );
 	    emfactory.close( );
 	}
 

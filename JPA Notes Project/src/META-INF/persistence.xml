@@ -3,7 +3,7 @@
 	<persistence-unit name="JPA Notes Project">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<class>com.jpanotesproject.model.Note</class>
-		<!--class>com.jpanotesproject.model.User</class-->
+		<class>com.jpanotesproject.model.User</class>
 		<class>com.jpanotesproject.model.Tag</class>
 		<!--class>com.jpanotesproject.model.TextNote</class-->
 		<properties>

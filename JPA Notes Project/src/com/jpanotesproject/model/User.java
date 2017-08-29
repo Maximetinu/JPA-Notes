@@ -1,14 +1,17 @@
 package com.jpanotesproject.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
+
+import java.util.HashMap;
 import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.FetchType;
+import javax.persistence.MapKey;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -28,16 +31,13 @@ public class User extends BaseEntity {
 	@Column(name = "RESGISTRATION_DATE")
 	private java.sql.Timestamp registrationDate;
 
-	@ElementCollection
-	@Column(name = "SHARED_NOTES")
-	private Map<Note, Integer> sharedNotes = new HashMap<Note, Integer>();
-
-	@ManyToMany
-	@Column(name = "TAGS")
-	private List<Tag> tags = new ArrayList<Tag>();
+	@ElementCollection(fetch=FetchType.EAGER)
+    @MapKey
+    @CollectionTable
+	private Map<Note, Integer> sharedNotes;
 
 	@OneToMany
-	private ArrayList<Note> ownNotes;
+	private List<Note> ownNotes;
 
 	public User(String name, String password, String email) {
 		super();
@@ -47,6 +47,9 @@ public class User extends BaseEntity {
 
 		long now = new java.util.Date().getTime();
 		this.registrationDate = new java.sql.Timestamp(now);
+		
+		sharedNotes = new HashMap<Note, Integer>();
+		ownNotes = new ArrayList<Note>();
 	}
 
 	public User() {
@@ -76,5 +79,13 @@ public class User extends BaseEntity {
 	
 	public java.sql.Timestamp getRegistrationDate(){
 		return registrationDate;
+	}
+	
+	public Map<Note, Integer> getSharedNotes(){
+		return sharedNotes;
+	}
+	
+	public List<Note> getOwnNotes(){
+		return ownNotes;
 	}
 }

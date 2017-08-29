@@ -2,14 +2,18 @@ package com.jpanotesproject.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
-//import java.util.HashMap;
-
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-//import javax.persistence.ElementCollection;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-//import javax.persistence.ManyToOne;
+import javax.persistence.ManyToOne;
+import javax.persistence.MapKey;
 import javax.persistence.Table;
 
 @Entity
@@ -23,20 +27,21 @@ public /* abstract */ class Note extends BaseEntity {
 	@Column(name = "LAST_EDIT_DATE")
 	private java.sql.Timestamp lastEditDate;;
 
-	//@ManyToOne
-	//@Column(name = "AUTHOR")
-	//private User author;
+	@ManyToOne
+	@JoinColumn
+	private User author;
 
-	//@ElementCollection
-	//@Column(name = "SHARED_USERS")
-	//private HashMap<User, Integer> sharedUsers;
+	@ElementCollection(fetch=FetchType.EAGER)
+    @MapKey
+    @CollectionTable
+	private Map<User, Integer> sharedUsers;
 	
 	@ManyToMany
 	private List<Tag> tags;
 
-	public Note(/*User author,*/ String title) {
+	public Note(User author, String title) {
 		super();
-		//this.author = author;
+		this.author = author;
 		this.title = title;
 		
 		long now = new java.util.Date().getTime();
@@ -45,7 +50,7 @@ public /* abstract */ class Note extends BaseEntity {
 		
 		tags = new ArrayList<Tag>();
 		
-		//sharedUsers = new HashMap<User, Integer>();
+		sharedUsers = new HashMap<User, Integer>();
 	}
 	
 	public void addTag(Tag t) {
@@ -64,7 +69,7 @@ public /* abstract */ class Note extends BaseEntity {
 		super();
 	}
 	
-	/*public boolean canRead(User user) {
+	public boolean canRead(User user) {
 		return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
 	}
 
@@ -77,7 +82,7 @@ public /* abstract */ class Note extends BaseEntity {
 			sharedUsers.put(user, permissionLevel);
 		else
 			sharedUsers.remove(user);
-	}*/
+	}
 
 	public java.sql.Timestamp getCreationDate() {
 		return creationDate;
