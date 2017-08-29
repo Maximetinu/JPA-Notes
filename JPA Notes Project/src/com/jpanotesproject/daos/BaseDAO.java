@@ -1,19 +1,18 @@
 package com.jpanotesproject.daos;
 
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import com.jpanotesproject.model.BaseEntity;;
 
 public abstract class BaseDAO<E extends BaseEntity>{
 
     private final Class<E> type;
-
-    @PersistenceContext
+    
     protected EntityManager entityManager;
 
-    protected BaseDAO(Class<E> type) {
+    protected BaseDAO(Class<E> type, EntityManager context) {
         this.type = type;
+        entityManager = context;
     }
 
     public E findById(Long typeId) {

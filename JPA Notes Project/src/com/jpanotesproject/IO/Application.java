@@ -1,6 +1,11 @@
 package com.jpanotesproject.IO;
 
-import com.jpanotesproject.daos.NotesCRUDService;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+
+import com.jpanotesproject.daos.*;
+import com.jpanotesproject.model.*;
 
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)
@@ -11,16 +16,23 @@ public class Application {
 
 	public static void main(String[] args) {
 		
-		// If delete() is commented the row must be manually deleted for avoiding duplicate primary key insert
-		// create() creates the table in case it doesn't exist. If it exists it works too
-
-		NotesCRUDService notesService = new NotesCRUDService();
+		// Tag entity working
+		// TODO: Uncomment from persistence.xml User and Note (one by one), debug and correct
 		
-		notesService.create();
-		notesService.read();
-		notesService.update();
-		///notesService.delete();
+		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
+	    EntityManager em = emfactory.createEntityManager( );
+	    em.getTransaction( ).begin( );
 
+		Tag t = new Tag("anotherTag");
+		
+		TagDAO tDAO = new TagDAO(em);
+		
+		tDAO.persist(t);
+		
+		em.getTransaction( ).commit( );
+
+	    em.close( );
+	    emfactory.close( );
 	}
 
 }
