@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "TEXT_NOTE")
-@PrimaryKeyJoinColumn(name="employeeId")
+@PrimaryKeyJoinColumn(name="NOTE.ID")
 public class TextNote extends Note  {
 	@Column(name = "TEXT")
 	private String text = "";
@@ -16,7 +16,8 @@ public class TextNote extends Note  {
 		super();
 	}
 	
-	public TextNote(String text) {
+	public TextNote(User author, String title, String text) {
+		super(author, title);
 		this.text = text;
 	}
 	

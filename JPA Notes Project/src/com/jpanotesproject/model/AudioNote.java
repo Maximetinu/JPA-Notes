@@ -6,25 +6,26 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "AUdio_NOTE")
+@Table(name = "AUDIO_NOTE")
 @PrimaryKeyJoinColumn(name="NOTE.ID")
 public class AudioNote extends Note  {
 	@Column(name = "CONTENT")
-	private Object img = "";
+	private Object audio = "";
 	
 	public AudioNote() {
 		super();
 	}
 	
-	public AudioNote(Object img) {
-		this.img = img;
+	public AudioNote(User author, String title, Object audio) {
+		super(author, title);
+		this.audio = audio;
 	}
 	
 	public Object getAudio() {
-		return img;
+		return audio;
 	}
 	
-	public void setAudio(Object img) {
-		this.img = img;
+	public void setAudio(Object audio) {
+		this.audio = audio;
 	}
 }

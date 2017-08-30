@@ -22,12 +22,9 @@ public class Application {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
 	    EntityManager em = emfactory.createEntityManager( );
 	    em.getTransaction( ).begin( );
-
-		Tag t = new Tag("anotherTag");
 		
-		TagDAO tDAO = new TagDAO(em);
-		
-		tDAO.persist(t);
+		NotesCRUDService tDAO = new NotesCRUDService();
+		tDAO.create();
 		
 		em.getTransaction( ).commit( );
 

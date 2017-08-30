@@ -20,8 +20,8 @@ import javax.persistence.Table;
 import javax.persistence.InheritanceType;
 
 @Entity
-@Table(name = "NOTE")
-@Inheritance(strategy=InheritanceType.JOINED)
+//@Table(name = "NOTE")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Note extends BaseEntity {
 
 	@Column(name = "TITLE")

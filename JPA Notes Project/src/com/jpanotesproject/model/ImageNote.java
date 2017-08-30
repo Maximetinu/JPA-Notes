@@ -16,7 +16,8 @@ public class ImageNote extends Note  {
 		super();
 	}
 	
-	public ImageNote(Object img) {
+	public ImageNote(User author, String title, Object img) {
+		super(author, title);
 		this.img = img;
 	}
 	
