@@ -19,8 +19,8 @@ import javax.persistence.MapKey;
 import javax.persistence.Table;
 import javax.persistence.InheritanceType;
 
-@Entity
 //@Table(name = "NOTE")
+@Entity
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public abstract class Note extends BaseEntity {
 

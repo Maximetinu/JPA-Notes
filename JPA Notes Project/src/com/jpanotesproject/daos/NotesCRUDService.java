@@ -25,7 +25,7 @@ public class NotesCRUDService {
 	    
 	    User usuario_test = new User("John", "my_incredible_pass", "john_89@dmail.com");
 
-	    Note note = new TextNote(usuario_test, "title of the note", "test text note content"); 
+	    TextNote note = new TextNote(usuario_test, "title of the note", "test text note content"); 
 	     
 	    entitymanager.persist( note );
         entitymanager.getTransaction( ).commit( );

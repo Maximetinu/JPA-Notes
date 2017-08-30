@@ -19,17 +19,17 @@ public class Application {
 		// Tag entity working
 		// TODO: Uncomment from persistence.xml User and Note (one by one), debug and correct
 		
-		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
-	    EntityManager em = emfactory.createEntityManager( );
-	    em.getTransaction( ).begin( );
+	//	EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
+	  //  EntityManager em = emfactory.createEntityManager( );
+	   // em.getTransaction( ).begin( );
 		
 		NotesCRUDService tDAO = new NotesCRUDService();
 		tDAO.create();
 		
-		em.getTransaction( ).commit( );
+	//	em.getTransaction( ).commit( );
 
-	    em.close( );
-	    emfactory.close( );
+	//    em.close( );
+	  //  emfactory.close( );
 	}
 
 }

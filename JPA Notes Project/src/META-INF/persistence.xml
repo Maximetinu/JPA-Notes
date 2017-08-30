@@ -5,7 +5,9 @@
 		<class>com.jpanotesproject.model.Note</class>
 		<class>com.jpanotesproject.model.User</class>
 		<class>com.jpanotesproject.model.Tag</class>
-		<!--class>com.jpanotesproject.model.TextNote</class-->
+		<class>com.jpanotesproject.model.TextNote</class>
+		<class>com.jpanotesproject.model.AudioNote</class>
+		<class>com.jpanotesproject.model.ImageNote</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.45:3306/notesdb"/>
 			<property name="javax.persistence.jdbc.user" value="lifka"/>
