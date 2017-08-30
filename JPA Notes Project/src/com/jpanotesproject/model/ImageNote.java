@@ -10,22 +10,22 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="NOTE.ID")
 public class ImageNote extends Note  {
 	@Column(name = "CONTENT")
-	private Object img = "";
+	private String img = "";
 	
 	public ImageNote() {
 		super();
 	}
 	
-	public ImageNote(User author, String title, Object img) {
+	public ImageNote(User author, String title, String img) {
 		super(author, title);
 		this.img = img;
 	}
 	
-	public Object getImage() {
+	public String getImage() {
 		return img;
 	}
 	
-	public void setImage(Object img) {
+	public void setImage(String img) {
 		this.img = img;
 	}
 }

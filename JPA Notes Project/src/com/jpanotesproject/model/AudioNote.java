@@ -10,22 +10,22 @@ import javax.persistence.Table;
 @PrimaryKeyJoinColumn(name="NOTE.ID")
 public class AudioNote extends Note  {
 	@Column(name = "CONTENT")
-	private Object audio = "";
+	private String audio;
 	
 	public AudioNote() {
 		super();
 	}
 	
-	public AudioNote(User author, String title, Object audio) {
+	public AudioNote(User author, String title, String audio) {
 		super(author, title);
 		this.audio = audio;
 	}
 	
-	public Object getAudio() {
+	public String getAudio() {
 		return audio;
 	}
 	
-	public void setAudio(Object audio) {
+	public void setAudio(String audio) {
 		this.audio = audio;
 	}
 }
