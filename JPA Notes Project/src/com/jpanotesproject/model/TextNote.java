@@ -6,7 +6,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TEXT_NOTE")
+@Table(name = "text_note")
 @PrimaryKeyJoinColumn(name="NOTE.ID")
 public class TextNote extends Note  {
 	@Column(name = "TEXT")

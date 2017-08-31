@@ -19,7 +19,7 @@ import javax.persistence.MapKey;
 import javax.persistence.Table;
 import javax.persistence.InheritanceType;
 
-//@Table(name = "NOTE")
+//@Table(name = "note")
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Note extends BaseEntity {
