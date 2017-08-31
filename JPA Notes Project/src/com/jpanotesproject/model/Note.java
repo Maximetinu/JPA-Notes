@@ -1,20 +1,14 @@
 package com.jpanotesproject.model;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKey;
-import javax.persistence.MapKeyColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -29,19 +23,19 @@ public /* abstract */ class Note extends BaseEntity {
 	private java.sql.Timestamp lastEditDate;;
 
 	@ManyToOne
-	@JoinColumn(name = "AUTHOR")
+	@JoinColumn(name = "AUTHORSHIP")
 	private User author;
 
-	@ElementCollection
-	@CollectionTable(name = "NOTE_SHARED_USERS")
-	@MapKeyColumn(name = "PERMISSION_LEVEL")
-	@MapKey
-	private Map<User, Integer> sharedUsers;
+	// @ElementCollection
+	// @CollectionTable(name = "NOTE_SHARED_USERS")
+	// @MapKeyColumn(name = "PERMISSION_LEVEL")
+	// @MapKey private Map<User, Integer> sharedUsers;
 
+	// Intentar aquí referenciar al tag por su texto y no por su ID
 	@ManyToMany
-	@JoinTable(name = "NOTE_TAGS") // ,
-	// joinColumns=@JoinColumn(name="EMP_ID", referencedColumnName="ID"),
-	// inverseJoinColumns=@JoinColumn(name="PROJ_ID", referencedColumnName="ID"))
+	@JoinTable(name = "NOTE_HAS_TAGS", joinColumns = {
+			@JoinColumn(name = "NOTE_ID", referencedColumnName = "ID") }, inverseJoinColumns = {
+					@JoinColumn(name = "TAG_TEXT", referencedColumnName = "TAG_TEXT") })
 	private List<Tag> tags;
 
 	public Note(User author, String title) {
@@ -55,7 +49,9 @@ public /* abstract */ class Note extends BaseEntity {
 
 		tags = new ArrayList<Tag>();
 
-		sharedUsers = new HashMap<User, Integer>();
+		// sharedUsers = new HashMap<User, Integer>();
+
+		author.addAuthorNote(this);
 	}
 
 	public void addTag(Tag t) {
@@ -82,28 +78,28 @@ public /* abstract */ class Note extends BaseEntity {
 		super();
 	}
 
-	public void shareWith(User u) {
-		sharedUsers.put(u, 1);
-	}
-
-	public void shareWith(User u, int permissionLevel) {
-		sharedUsers.put(u, permissionLevel);
-	}
-
-	public boolean canRead(User user) {
-		return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
-	}
-
-	public boolean canReadAndWrite(User user) {
-		return sharedUsers.containsKey(user) && sharedUsers.get(user) == 2;
-	}
-
-	public void setPermission(User user, Integer permissionLevel) {
-		if (permissionLevel > 0)
-			sharedUsers.put(user, permissionLevel);
-		else
-			sharedUsers.remove(user);
-	}
+	// public void shareWith(User u) {
+	// sharedUsers.put(u, 1);
+	// }
+	//
+	// public void shareWith(User u, int permissionLevel) {
+	// sharedUsers.put(u, permissionLevel);
+	// }
+	//
+	// public boolean canRead(User user) {
+	// return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
+	// }
+	//
+	// public boolean canReadAndWrite(User user) {
+	// return sharedUsers.containsKey(user) && sharedUsers.get(user) == 2;
+	// }
+	//
+	// public void setPermission(User user, Integer permissionLevel) {
+	// if (permissionLevel > 0)
+	// sharedUsers.put(user, permissionLevel);
+	// else
+	// sharedUsers.remove(user);
+	// }
 
 	public java.sql.Timestamp getCreationDate() {
 		return creationDate;

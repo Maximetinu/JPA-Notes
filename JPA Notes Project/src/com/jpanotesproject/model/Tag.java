@@ -8,7 +8,7 @@ import javax.persistence.Table;
 @Table(name = "TAG")
 public class Tag extends BaseEntity {
 
-	@Column(name = "TAGTEXT", unique = true, length = 255)
+	@Column(name = "TAG_TEXT", unique = true, length = 255)
 	private String tagText;
 
 	public Tag() {
