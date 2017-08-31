@@ -1,5 +1,9 @@
 package com.jpanotesproject.IO;
 
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -71,7 +75,12 @@ public class Application {
 		n4.shareWith(u4, 2);
 		n4.shareWith(u1, 2);
 
-		n5.shareWith(u2, 1); // COMO GANG YA TENÍA UNA NOTA COMPARTIDA NO SE HA METIDO
+		n5.shareWith(u2, 1); // COMO GANG YA TENÍA UNA NOTA COMPARTIDA NO SE HA
+		// METIDO LA SEGUNDA
+		// IGUAL PARA LAS NOTAS. N3 Y N4 SOLO SE HAN QUEDADO CON LA PRIMERA COMPARTICION
+		// FALLO ENCONTRADO:
+		// Cuando añadimos a Gang.sharedNotes la segunda nota, esta no se mete
+		// directamente. O al menos tras los persist no está ahí.
 
 		// TAGS CREATION
 		Tag t1 = new Tag("T1");
@@ -127,8 +136,94 @@ public class Application {
 
 		em.getTransaction().commit();
 
+		/*
+		 * CUAL ES EL PROBLEMA Le compartimos a U2 (Gang) 2 notas diferentes, Metinu-C y
+		 * Oceloto-Y Después de persistir a Gang y hacer el commit, en la BD Gang solo
+		 * tiene a Metinu-C (la segunda no se ha metido) Luego, ¿el problema es solo en
+		 * la BD (problema JPA) o en el Map sharedNotes (problema Java)? comprobemoslo
+		 * ---> No tendría sentido que fuese fallo del Java.Map porque a un map
+		 * SharedNotes<Note, Integer> le estamos metiendo dos notas diferentes, no es
+		 * duplicate key.
+		 * 
+		 * CUAL ES EL PROBLEMA Lo primero que hago es imprimir las Shared Notes de Gang
+		 * tras el persist y todo y joder, solo tiene 1, veamos por qué
+		 * 
+		 * 
+		 * Para comprobarlo a continuación hacemos... Le meto la otra nota N5 a Gang de
+		 * nuevio y efectivamente se mete. Todo apunta a que es fallo de JPA entonces
+		 * 
+		 * Comenzamos transacción nueva con el entity manager, persistimos a Gang de
+		 * nuevo ahora con 2 Shared Notes, y vamos a comprobar... En este momento espero
+		 * que solo tenga 1 y el problema sea al persistir... ¡Y no! Tras persistirlo
+		 * sigue teniendo 2.
+		 * 
+		 * ¡Ah! A lo mejor pasa a tener 1 cuando haga el commit de la transacción. Si,
+		 * claro, de hecho seguramente si no hago el commit no se suben los datos
+		 * persistidos. Hago el commit y compruebo de nuevo...
+		 * 
+		 * ¡¡Jodeeer!!! Al imprimir el Map Se ha metido todo bien y Javi tiene dos
+		 * notas!! A ver que pasa en la MySQL... WTFFF!!! Aparece la segunda de Gang con
+		 * NULL en lo que debería ser la clave primaria, no tiene sentido porque la PK
+		 * no puede ser NULL
+		 * 
+		 * Conclusiones que saco. El fallo parece estar en las anotaciones JPA. En algún
+		 * lugar tendré que decirle que la clave primaria no es el USERNAME porque puede
+		 * haber varios
+		 * 
+		 * Esto tendré que decirlo en la clase user, en las anotaciones de sharedNotes
+		 * 
+		 * NOTA: fijarse en
+		 * http://www.logicbig.com/tutorials/java-ee-tutorial/jpa/map-with-entity-keys/
+		 * que es el tutorial que me ha enseñado a mapear el Map
+		 * 
+		 * Lo que no entiendo es como insistiendole ha metido NULL en la clave primaria.
+		 * Es que no tiene sentido. Es muy raro que haga esto solo si persisto dos veces
+		 * con la nota compartida pero si es solo 1 vez no.
+		 * 
+		 * Por cierto, ocurre exactamente lo mismo en el otro Map, el de sharedUsers de
+		 * la nota.
+		 * 
+		 * La solución debe de estar jugando con los parámetros del @JoinColumn dentro
+		 * del @CollectionTable del Map
+		 * https://www.eclipse.org/eclipselink/api/2.0.2/javax/persistence/JoinColumn.
+		 * html
+		 * 
+		 * De alguna manera en los parámetros del CollectionTable y del JoinColumn debo
+		 * poder decirle que la clave es otra cualquiera (a poder ser una suma de
+		 * strings entre la nota y el usuario, o un autoincrement) y que el usuario sí
+		 * que se puede repetir (unique = false)
+		 */
+
+		System.out.println(printMap(u2.getSharedNotes())); // SOLO TIENE 1
+		n5.shareWith(u2, 1); // LE METEMOS LA OTRA NOTA
+		System.out.println(printMap(u2.getSharedNotes())); // VEMOS QUE SE HA METIDO Y TIENE 2
+
+		em.getTransaction().begin(); // COMENZAMOS NUEVA TRANSACCIÓN
+		uDAO.persist(u2); // PERSISTIMOS A GANG Y VOLVEMOS A COMPROBAR...
+		System.out.println(printMap(u2.getSharedNotes())); // TRAS PERSISTIRLO SIGUE TENIENDO 2
+
+		em.getTransaction().commit(); // HACEMOS UN COMMIT
+		System.out.println(printMap(u2.getSharedNotes())); // WTFF SE HA METIDO Y EN LA TABLA MYSQL APARECE NULL
+
 		em.close();
 		emfactory.close();
+	}
+
+	public static String printMap(Map<Note, Integer> map) {
+		StringBuilder sb = new StringBuilder();
+		Iterator<Entry<Note, Integer>> iter = map.entrySet().iterator();
+		while (iter.hasNext()) {
+			Entry<Note, Integer> entry = iter.next();
+			sb.append(entry.getKey());
+			sb.append('=').append('"');
+			sb.append(entry.getValue());
+			sb.append('"');
+			if (iter.hasNext()) {
+				sb.append(',').append(' ');
+			}
+		}
+		return sb.toString();
+
 	}
 
 }

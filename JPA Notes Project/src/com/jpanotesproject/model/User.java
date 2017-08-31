@@ -31,11 +31,10 @@ public class User extends BaseEntity {
 	@Column(name = "RESGISTRATION_DATE")
 	private java.sql.Timestamp registrationDate;
 
-	// @ElementCollection
-	// @CollectionTable(name = "USER_SHARED_NOTES")
-	// @MapKeyColumn(name = "PERMISSION_LEVEL")
-	// @MapKey
-	// private Map<Note, Integer> sharedNotes;
+	// A CollectionTable le he puesto nullable = false a ver si así no se queda Gang
+	// en null...
+	// Nada, si le pongo nullable= false me da un fallo en mysql diciendo que no
+	// puede ser NULL /*, nullable = false*/
 	@ElementCollection
 	@CollectionTable(name = "USER_HAS_SHARED_NOTES", joinColumns = @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME"))
 	@MapKeyJoinColumn(name = "SHARED_NOTE", referencedColumnName = "ID")
@@ -104,5 +103,9 @@ public class User extends BaseEntity {
 
 	public List<Note> getOwnNotes() {
 		return ownNotes;
+	}
+
+	public Map<Note, Integer> getSharedNotes() {
+		return sharedNotes;
 	}
 }
