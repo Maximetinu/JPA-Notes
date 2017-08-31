@@ -65,13 +65,13 @@ public class Application {
 		Note n7 = new Note(u5, "NOTA-OCELOTO-Z");
 
 		// SHARED_NOTES
-		// n3.shareWith(u3, 2);
-		// n3.shareWith(u2, 1);
-		//
-		// n4.shareWith(u4, 2);
-		// n4.shareWith(u1, 2);
-		//
-		// n5.shareWith(u2, 1);
+		n3.shareWith(u3, 2);
+		n3.shareWith(u2, 1);
+
+		n4.shareWith(u4, 2);
+		n4.shareWith(u1, 2);
+
+		n5.shareWith(u2, 1); // COMO GANG YA TENÍA UNA NOTA COMPARTIDA NO SE HA METIDO
 
 		// TAGS CREATION
 		Tag t1 = new Tag("T1");

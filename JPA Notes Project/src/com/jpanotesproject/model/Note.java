@@ -1,14 +1,19 @@
 package com.jpanotesproject.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -23,15 +28,15 @@ public /* abstract */ class Note extends BaseEntity {
 	private java.sql.Timestamp lastEditDate;;
 
 	@ManyToOne
-	@JoinColumn(name = "AUTHORSHIP")
+	@JoinColumn(name = "AUTHORSHIP", referencedColumnName = "USERNAME")
 	private User author;
 
-	// @ElementCollection
-	// @CollectionTable(name = "NOTE_SHARED_USERS")
-	// @MapKeyColumn(name = "PERMISSION_LEVEL")
-	// @MapKey private Map<User, Integer> sharedUsers;
+	@ElementCollection
+	@CollectionTable(name = "NOTE_HAS_BEEN_SHARED_TO_USER", joinColumns = @JoinColumn(name = "NOTE_ID", referencedColumnName = "ID"))
+	@MapKeyJoinColumn(name = "USER_THAT_NOTE_HAS_BEEN_SHARED_TO", referencedColumnName = "USERNAME")
+	@Column(name = "PERMISSION_LEVEL")
+	private Map<User, Integer> sharedUsers;
 
-	// Intentar aquí referenciar al tag por su texto y no por su ID
 	@ManyToMany
 	@JoinTable(name = "NOTE_HAS_TAGS", joinColumns = {
 			@JoinColumn(name = "NOTE_ID", referencedColumnName = "ID") }, inverseJoinColumns = {
@@ -49,7 +54,7 @@ public /* abstract */ class Note extends BaseEntity {
 
 		tags = new ArrayList<Tag>();
 
-		// sharedUsers = new HashMap<User, Integer>();
+		sharedUsers = new HashMap<User, Integer>();
 
 		author.addAuthorNote(this);
 	}
@@ -78,13 +83,15 @@ public /* abstract */ class Note extends BaseEntity {
 		super();
 	}
 
-	// public void shareWith(User u) {
-	// sharedUsers.put(u, 1);
-	// }
-	//
-	// public void shareWith(User u, int permissionLevel) {
-	// sharedUsers.put(u, permissionLevel);
-	// }
+	public void shareWith(User u) {
+		sharedUsers.put(u, 1);
+		u.shareNote(this, 1);
+	}
+
+	public void shareWith(User u, int permissionLevel) {
+		sharedUsers.put(u, permissionLevel);
+		u.shareNote(this, permissionLevel);
+	}
 	//
 	// public boolean canRead(User user) {
 	// return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;

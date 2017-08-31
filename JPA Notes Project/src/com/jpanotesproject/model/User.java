@@ -1,12 +1,17 @@
 package com.jpanotesproject.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.MapKeyJoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -31,6 +36,11 @@ public class User extends BaseEntity {
 	// @MapKeyColumn(name = "PERMISSION_LEVEL")
 	// @MapKey
 	// private Map<Note, Integer> sharedNotes;
+	@ElementCollection
+	@CollectionTable(name = "USER_HAS_SHARED_NOTES", joinColumns = @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME"))
+	@MapKeyJoinColumn(name = "SHARED_NOTE", referencedColumnName = "ID")
+	@Column(name = "PERMISSION_LEVEL")
+	private Map<Note, Integer> sharedNotes;
 
 	@OneToMany
 	@JoinTable(name = "USER_HAS_NOTES", joinColumns = {
@@ -47,7 +57,7 @@ public class User extends BaseEntity {
 		long now = new java.util.Date().getTime();
 		this.registrationDate = new java.sql.Timestamp(now);
 
-		// sharedNotes = new HashMap<Note, Integer>();
+		sharedNotes = new HashMap<Note, Integer>();
 		ownNotes = new ArrayList<Note>();
 	}
 
@@ -57,6 +67,10 @@ public class User extends BaseEntity {
 
 	public void addAuthorNote(Note note) {
 		this.ownNotes.add(note);
+	}
+
+	public void shareNote(Note n, int permissionLevel) {
+		this.sharedNotes.put(n, permissionLevel);
 	}
 
 	// public boolean canRead(Note note) {
