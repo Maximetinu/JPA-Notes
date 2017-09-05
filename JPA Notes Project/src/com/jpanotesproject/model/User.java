@@ -31,10 +31,6 @@ public class User extends BaseEntity {
 	@Column(name = "RESGISTRATION_DATE")
 	private java.sql.Timestamp registrationDate;
 
-	// A CollectionTable le he puesto nullable = false a ver si así no se queda Gang
-	// en null...
-	// Nada, si le pongo nullable= false me da un fallo en mysql diciendo que no
-	// puede ser NULL /*, nullable = false*/
 	@ElementCollection
 	@CollectionTable(name = "USER_HAS_SHARED_NOTES", joinColumns = @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME"))
 	@MapKeyJoinColumn(name = "SHARED_NOTE", referencedColumnName = "ID")
