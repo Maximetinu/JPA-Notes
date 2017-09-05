@@ -49,7 +49,6 @@ inheritance_jpa
 
 	
 		// REALLY NIGGA
-=======
 		// USUARIOS: Metinu, Gang, Oceloto, Penquiu, Ulises
 
 		// NOTAS: NOTA-METINU-A, NOTA-METINU-B, NOTA-METINU-C -> METINU
@@ -76,15 +75,15 @@ inheritance_jpa
 		User u5 = new User("ulises", "contraUlisescom", "ulyssesdarkline@gmail.com");
 
 		// NOTES
-		Note n1 = new Note(u1, "NOTA-METINU-A");
-		Note n2 = new Note(u1, "NOTA-METINU-B");
-		Note n3 = new Note(u1, "NOTA-METINU-C");
+		TextNote n1 = new TextNote(u1, "NOTA-METINU-A", "Javi guapo A");
+		TextNote n2 = new TextNote(u1, "NOTA-METINU-B", "Javi guapo");
+		TextNote n3 = new TextNote(u1, "NOTA-METINU-C", "Javi guapo");
 
-		Note n4 = new Note(u2, "NOTA-GANG-N");
+		TextNote n4 = new TextNote(u2, "NOTA-GANG-N", "Javi guapo N");
 
-		Note n5 = new Note(u3, "NOTA-OCELOTO-Y");
-		Note n6 = new Note(u4, "NOTA-OCELOTO-X");
-		Note n7 = new Note(u5, "NOTA-OCELOTO-Z");
+		TextNote n5 = new TextNote(u3, "NOTA-OCELOTO-Y", "Javi guapo");
+		TextNote n6 = new TextNote(u4, "NOTA-OCELOTO-X", "Javi guapo");
+		TextNote n7 = new TextNote(u5, "NOTA-OCELOTO-Z", "Javi guapo");
 
 		// TAGS CREATION
 		Tag t1 = new Tag("T1");

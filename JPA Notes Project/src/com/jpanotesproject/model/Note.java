@@ -7,18 +7,16 @@ import java.util.Map;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 
-import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-
-import javax.persistence.MapKey;
-
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -96,21 +94,21 @@ public abstract  class Note extends BaseEntity {
 		sharedUsers.put(u, permissionLevel);
 		u.shareNote(this, permissionLevel);
 	}
-	//
-	// public boolean canRead(User user) {
-	// return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
-	// }
-	//
-	// public boolean canReadAndWrite(User user) {
-	// return sharedUsers.containsKey(user) && sharedUsers.get(user) == 2;
-	// }
-	//
-	// public void setPermission(User user, Integer permissionLevel) {
-	// if (permissionLevel > 0)
-	// sharedUsers.put(user, permissionLevel);
-	// else
-	// sharedUsers.remove(user);
-	// }
+	
+	public boolean canRead(User user) {
+		return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
+	}
+	
+	public boolean canReadAndWrite(User user) {
+		return sharedUsers.containsKey(user) && sharedUsers.get(user) == 2;
+	 }
+	
+	public void setPermission(User user, Integer permissionLevel) {
+		if (permissionLevel > 0)
+			sharedUsers.put(user, permissionLevel);
+		else
+			sharedUsers.remove(user);
+	}
 
 	public java.sql.Timestamp getCreationDate() {
 		return creationDate;

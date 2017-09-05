@@ -7,7 +7,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "audio_note")
-@PrimaryKeyJoinColumn(name="NOTE.ID")
 public class AudioNote extends Note  {
 	@Column(name = "CONTENT")
 	private String audio;
