@@ -4,33 +4,33 @@ import javax.persistence.EntityManager;
 
 import com.jpanotesproject.model.BaseEntity;;
 
-public abstract class BaseDAO<E extends BaseEntity>{
+public abstract class BaseDAO<E extends BaseEntity> {
 
-    private final Class<E> type;
-    
-    protected EntityManager entityManager;
+	private final Class<E> type;
 
-    protected BaseDAO(Class<E> type, EntityManager context) {
-        this.type = type;
-        entityManager = context;
-    }
+	protected EntityManager entityManager;
 
-    public E findById(Long typeId) {
-        return entityManager.find(type, typeId);
-    }
+	protected BaseDAO(Class<E> type, EntityManager context) {
+		this.type = type;
+		entityManager = context;
+	}
 
-    public void persist(E entity) {
-        //if (entity.getId() != null)
-        //    entityManager.merge(entity);
-        //else
-            entityManager.persist(entity);
-    }
+	public E findById(Long typeId) {
+		return entityManager.find(type, typeId);
+	}
 
-    public void remove(E entity) {
-        if (entity.getId() != null)
-            entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
-        else
-            throw new IllegalArgumentException("Entity not persisted");
-    }
+	public void persist(E entity) {
+		if (entity.getId() != null)
+			entityManager.merge(entity);
+		else
+			entityManager.persist(entity);
+	}
+
+	public void remove(E entity) {
+		if (entity.getId() != null)
+			entityManager.remove(entityManager.contains(entity) ? entity : entityManager.merge(entity));
+		else
+			throw new IllegalArgumentException("Entity not persisted");
+	}
 
 }
