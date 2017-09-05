@@ -20,10 +20,10 @@ public abstract class BaseDAO<E extends BaseEntity> {
 	}
 
 	public void persist(E entity) {
-		// if (entity.getId() != null)
-		// entityManager.merge(entity);
-		// else
-		entityManager.persist(entity);
+		if (entity.getId() != null)
+			entityManager.merge(entity);
+		else
+			entityManager.persist(entity);
 	}
 
 	public void remove(E entity) {
