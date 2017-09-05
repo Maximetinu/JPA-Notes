@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TAG")
-public class Tag extends BaseEntity {
+@Table(name="tag")
+public class Tag extends BaseEntity{
 
 	@Column(name = "TAG_TEXT", unique = true, length = 255)
 	private String tagText;

@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "user")
 public class User extends BaseEntity {
 
 	@Column(name = "USERNAME", unique = true, length = 255)

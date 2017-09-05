@@ -5,14 +5,20 @@
 		<class>com.jpanotesproject.model.Note</class>
 		<class>com.jpanotesproject.model.User</class>
 		<class>com.jpanotesproject.model.Tag</class>
-		<!--class>com.jpanotesproject.model.TextNote</class-->
+		<class>com.jpanotesproject.model.TextNote</class>
+		<class>com.jpanotesproject.model.AudioNote</class>
+		<class>com.jpanotesproject.model.ImageNote</class>
 		<properties>
-			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.45:3306/notesdb"/>
-			<property name="javax.persistence.jdbc.user" value="lifka"/>
+            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+			<!--property name="javax.persistence.jdbc.url" value="jdbc:mysql://192.168.1.45:3306/notesdb"/-->
+			<!--property name="javax.persistence.jdbc.user" value="lifka"/-->
+			<!--property name="javax.persistence.jdbc.password" value="javiguapo1"/-->
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/notesdb"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="javiguapo1"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="eclipselink.logging.level" value="FINE"/>
-			<property name="eclipselink.ddl-generation" value="create-tables"/>
 		</properties>
 	</persistence-unit>
 </persistence>

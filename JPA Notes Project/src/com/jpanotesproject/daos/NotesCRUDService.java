@@ -5,6 +5,8 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 import com.jpanotesproject.model.Note;
+import com.jpanotesproject.model.TextNote;
+import com.jpanotesproject.model.User;
 
 /*
  * This class is a test. It is expected that, maybe, implement a CRUD Interface, or a BaseService interface
@@ -15,38 +17,37 @@ import com.jpanotesproject.model.Note;
  */
 public class NotesCRUDService {
 	
-	public void create() {
+	public void create(Note note) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
 	      
 	    EntityManager entitymanager = emfactory.createEntityManager( );
 	    entitymanager.getTransaction( ).begin( );
-/*
-	    Note note = new Note( ); 
-	    note.setCreationDate( "1201" );
-	    note.setTitle( "Gopal" );
-	      */
-	 //   entitymanager.persist( note );
-	    entitymanager.getTransaction( ).commit( );
+
+		entitymanager.persist( note );
+	    
+        entitymanager.getTransaction( ).commit( );
 
 	    entitymanager.close( );
 	    emfactory.close( );
 	}
-	
+	/*
 	// AKA Find
 	public void read() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
 	    EntityManager entitymanager = emfactory.createEntityManager();
-	    Note note = entitymanager.find( Note.class, "Gopal" );
+	  /*  Note note = entitymanager.find( Note.class, "Gopal" );
 
 	    System.out.println("note Creation Date = " + note.getCreationDate( ));
 	    System.out.println("note Title = " + note.getTitle( ));
-	}
+	    */
+/*	}
 	
 	public void update() {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
 	      
 	    EntityManager entitymanager = emfactory.createEntityManager( );
 	    entitymanager.getTransaction( ).begin( );
+	    /*
 	    Note note = entitymanager.find( Note.class, "Gopal" );
 	      
 	    //before update
@@ -56,7 +57,8 @@ public class NotesCRUDService {
 	      
 	    //after update
 	    System.out.println( note );
-	    entitymanager.close();
+	    */
+/*	    entitymanager.close();
 	    emfactory.close();
 	}
 	
@@ -65,11 +67,13 @@ public class NotesCRUDService {
 		EntityManager entitymanager = emfactory.createEntityManager( );
 		entitymanager.getTransaction( ).begin( );
 		  
+		/*
 		Note note = entitymanager.find( Note.class, "Gopal" );
 		entitymanager.remove( note );
-		entitymanager.getTransaction( ).commit( );
+		*/
+/*		entitymanager.getTransaction( ).commit( );
 		entitymanager.close( );
 		emfactory.close( );		
-	}
+	}*/
 
 }
