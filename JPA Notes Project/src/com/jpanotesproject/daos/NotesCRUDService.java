@@ -17,18 +17,12 @@ import com.jpanotesproject.model.User;
  */
 public class NotesCRUDService {
 	
-	public void create() {
+	public void create(Note note) {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory( "JPA Notes Project" );
 	      
 	    EntityManager entitymanager = emfactory.createEntityManager( );
 	    entitymanager.getTransaction( ).begin( );
 
-	    User usuario_test = new User("John4", "my_incredible_pass", "john4_89@dmail.com");
-		entitymanager.persist( usuario_test );
-
-		/**/System.out.println("Creating note");//*/
-		TextNote note = new TextNote(usuario_test, "title of the note", "test text note content"); 
-		/**/System.out.println("Note created");//*/
 		entitymanager.persist( note );
 	    
         entitymanager.getTransaction( ).commit( );

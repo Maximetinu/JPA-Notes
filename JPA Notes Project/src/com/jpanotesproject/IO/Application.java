@@ -4,8 +4,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
+import com.jpanotesproject.daos.NotesDAO;
 import com.jpanotesproject.daos.TagDAO;
+import com.jpanotesproject.daos.UserDAO;
+import com.jpanotesproject.model.Note;
 import com.jpanotesproject.model.Tag;
+import com.jpanotesproject.model.User;
+import com.jpanotesproject.model.TextNote;
 
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)
@@ -30,6 +35,17 @@ public class Application {
 		Tag t = new Tag("haaa");
 		TagDAO tDAO = new TagDAO(em);
 		tDAO.persist(t);
+
+		User user = new User("user_a", "my_password", "johnsnow@agagaga.com");
+		UserDAO userDAO = new UserDAO(em);
+		userDAO.persist(user);
+
+		TextNote text_note = new TextNote(user, "title of the note", "text text text");
+		NotesDAO notesDAO = new NotesDAO(em);
+		notesDAO.persist(text_note);
+
+
+	
 		// REALLY NIGGA
 
 		em.getTransaction().commit();
