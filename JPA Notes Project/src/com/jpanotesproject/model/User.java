@@ -16,31 +16,31 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "User")
 public class User extends BaseEntity {
 
-	@Column(name = "USERNAME", unique = true, length = 255)
+	@Column(name = "username", unique = true, length = 255)
 	private String username;
 
-	@Column(name = "PASSWORD", length = 255)
+	@Column(name = "password", length = 255)
 	private String password;
 
-	@Column(name = "EMAIL", unique = true, length = 255)
+	@Column(name = "email", unique = true, length = 255)
 	private String email;
 
-	@Column(name = "RESGISTRATION_DATE")
+	@Column(name = "resgistration_date")
 	private java.sql.Timestamp registrationDate;
 
 	@ElementCollection
-	@CollectionTable(name = "USER_HAS_SHARED_NOTES", joinColumns = @JoinColumn(name = "USERNAME", referencedColumnName = "USERNAME"))
-	@MapKeyJoinColumn(name = "SHARED_NOTE", referencedColumnName = "ID")
+	@CollectionTable(name = "UserHasSharedNotes", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
+	@MapKeyJoinColumn(name = "shared_note", referencedColumnName = "id")
 	@Column(name = "PERMISSION_LEVEL")
 	private Map<Note, Integer> sharedNotes;
 
 	@OneToMany
-	@JoinTable(name = "USER_HAS_NOTES", joinColumns = {
-			@JoinColumn(name = "AUTHOR_NAME", referencedColumnName = "USERNAME") }, inverseJoinColumns = {
-					@JoinColumn(name = "NOTE_ID", referencedColumnName = "ID") })
+	@JoinTable(name = "UserHasNotes", joinColumns = {
+			@JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
+					@JoinColumn(name = "note_id", referencedColumnName = "id") })
 	private List<Note> ownNotes;
 
 	public User(String name, String password, String email) {
@@ -68,26 +68,20 @@ public class User extends BaseEntity {
 		this.sharedNotes.put(n, permissionLevel);
 	}
 
-	// public boolean canRead(Note note) {
-	// if (ownNotes.contains(note))
-	// return true;
-	// else
-	// return sharedNotes.containsKey(note) && sharedNotes.get(note) >= 1;
-	// }
-	//
-	// public boolean canReadAndWrite(Note note) {
-	// if (ownNotes.contains(note))
-	// return true;
-	// else
-	// return sharedNotes.containsKey(note) && sharedNotes.get(note) == 2;
-	// }
-	//
-	// public void setPermission(Note note, Integer permissionLevel) {
-	// if (permissionLevel > 0)
-	// sharedNotes.put(note, permissionLevel);
-	// else
-	// sharedNotes.remove(note);
-	// }
+	public boolean canRead(Note note) {
+		return ownNotes.contains(note) || (sharedNotes.containsKey(note) && sharedNotes.get(note) >= 1);
+	}
+	
+	public boolean canReadAndWrite(Note note) {
+		return ownNotes.contains(note) || (sharedNotes.containsKey(note) && sharedNotes.get(note) == 2);
+	}
+	
+	public void setPermission(Note note, Integer permissionLevel) {
+		if (permissionLevel > 0)
+			sharedNotes.put(note, permissionLevel);
+		else
+			sharedNotes.remove(note);
+	}
 
 	// public Map<Note, Integer> getSharedNotes() {
 	// return sharedNotes;

@@ -22,27 +22,47 @@ import javax.persistence.MapKeyJoinColumn;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public abstract  class Note extends BaseEntity {
 
-	@Column(name = "TITLE", length = 255)
+	// TITLE limit to 255 characters
+	@Column(name = "title", length = 255)
 	private String title;
-	@Column(name = "CREATION_DATE")
+	
+	//Note creation time 
+	@Column(name = "creation_date")
 	private java.sql.Timestamp creationDate;
-	@Column(name = "LAST_EDIT_DATE")
+	
+	// Note last edit time
+	@Column(name = "last_edit_date")
 	private java.sql.Timestamp lastEditDate;;
 
+	// AUTHOR = Author of the note --> From column Username
 	@ManyToOne
-	@JoinColumn(name = "AUTHORSHIP", referencedColumnName = "USERNAME")
+	@JoinColumn(name = "author", referencedColumnName = "username") // Optional, but we want reference by Username instead of id
 	private User author;
 
+	// Collection 
 	@ElementCollection
-	@CollectionTable(name = "NOTE_HAS_BEEN_SHARED_TO_USER", joinColumns = @JoinColumn(name = "NOTE_ID", referencedColumnName = "ID"))
-	@MapKeyJoinColumn(name = "USER_THAT_NOTE_HAS_BEEN_SHARED_TO", referencedColumnName = "USERNAME")
-	@Column(name = "PERMISSION_LEVEL")
+	// Optional:
+	// New collection table (NoteHasBeenSharedUser) with three column (note_id, user_id, value) || One entry by user have permission in the note
+	@CollectionTable(name = "NoteHasBeenSharedUser", joinColumns = 
+				// (NoteHasBeenSharedUser.note_id = Note.id)
+				@JoinColumn(name = "note_id", referencedColumnName = "id"))
+	// (NoteHasBeenSharedUser.user_that_note_has_been_shared_to = User.username) --> User referenced by username instead of id
+	@MapKeyJoinColumn(name = "user_that_note_has_been_shared_to", referencedColumnName = "username")
+	// vale --> permission_level (NoteHasBeenSharedUser.permission_level)
+	@Column(name = "permission_level")
 	private Map<User, Integer> sharedUsers;
 
+	// tags is a list of entities
 	@ManyToMany
-	@JoinTable(name = "NOTE_HAS_TAGS", joinColumns = {
-			@JoinColumn(name = "NOTE_ID", referencedColumnName = "ID") }, inverseJoinColumns = {
-					@JoinColumn(name = "TAG_TEXT", referencedColumnName = "TAG_TEXT") })
+	// Optional:
+	// New table (NoteHasTags) with two column (note_id and tag_text)
+	@JoinTable(name = "NoteHasTags", joinColumns = {
+				// Note --> Tag  (NoteHasTags.note_id = Note.note_id)
+				@JoinColumn(name = "note_id", referencedColumnName = "id")
+			}, inverseJoinColumns = {
+				// Tag --> Note  (NoteHasTags.tag_text = Tag.tag_text)
+				@JoinColumn(name = "tag_text", referencedColumnName = "tag_text") 
+			})
 	private List<Tag> tags;
 
 	public Note(User author, String title) {
@@ -55,7 +75,6 @@ public abstract  class Note extends BaseEntity {
 		this.lastEditDate = creationDate;
 
 		tags = new ArrayList<Tag>();
-
 		sharedUsers = new HashMap<User, Integer>();
 
 		author.addAuthorNote(this);
@@ -65,8 +84,8 @@ public abstract  class Note extends BaseEntity {
 		tags.add(t);
 	}
 
+	// WARNING
 	// Comfortable way to create and add a Tag, but remember to persist the returned
-	// one
 	public Tag addTag(String s) {
 		Tag t = new Tag(s);
 		tags.add(t);

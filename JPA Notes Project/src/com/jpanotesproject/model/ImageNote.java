@@ -6,9 +6,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "image_note")
+@Table(name = "ImageNote")
 public class ImageNote extends Note  {
-	@Column(name = "CONTENT")
+	@Column(name = "content")
 	private String img = "";
 	
 	public ImageNote() {

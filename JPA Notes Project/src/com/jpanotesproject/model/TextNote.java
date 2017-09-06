@@ -2,15 +2,12 @@ package com.jpanotesproject.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "text_note")
+@Table(name = "TextNote")
 public class TextNote extends Note  {
-	@Column(name = "TEXT")
+	@Column(name = "content")
 	private String text = "";
 	
 	public TextNote() {

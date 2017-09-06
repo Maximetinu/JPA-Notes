@@ -6,9 +6,9 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "audio_note")
+@Table(name = "AudioNote")
 public class AudioNote extends Note  {
-	@Column(name = "CONTENT")
+	@Column(name = "content")
 	private String audio;
 	
 	public AudioNote() {
