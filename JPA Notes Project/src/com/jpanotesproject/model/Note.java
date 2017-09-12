@@ -9,7 +9,6 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
@@ -19,34 +18,37 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapKeyJoinColumn;
 
 @Entity
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract  class Note extends BaseEntity {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract class Note extends BaseEntity {
 
 	// TITLE limit to 255 characters
 	@Column(name = "title", length = 255)
 	private String title;
-	
-	//Note creation time 
+
+	// Note creation time
 	@Column(name = "creation_date")
 	private java.sql.Timestamp creationDate;
-	
+
 	// Note last edit time
 	@Column(name = "last_edit_date")
 	private java.sql.Timestamp lastEditDate;;
 
 	// AUTHOR = Author of the note --> From column Username
 	@ManyToOne
-	@JoinColumn(name = "author", referencedColumnName = "username") // Optional, but we want reference by Username instead of id
+	@JoinColumn(name = "author", referencedColumnName = "username") // Optional, but we want reference by Username
+																	// instead of id
 	private User author;
 
-	// Collection 
+	// Collection
 	@ElementCollection
 	// Optional:
-	// New collection table (NoteHasBeenSharedUser) with three column (note_id, user_id, value) || One entry by user have permission in the note
-	@CollectionTable(name = "NoteHasBeenSharedUser", joinColumns = 
-				// (NoteHasBeenSharedUser.note_id = Note.id)
-				@JoinColumn(name = "note_id", referencedColumnName = "id"))
-	// (NoteHasBeenSharedUser.user_that_note_has_been_shared_to = User.username) --> User referenced by username instead of id
+	// New collection table (NoteHasBeenSharedUser) with three column (note_id,
+	// user_id, value) || One entry by user have permission in the note
+	@CollectionTable(name = "NoteHasBeenSharedUser", joinColumns =
+	// (NoteHasBeenSharedUser.note_id = Note.id)
+	@JoinColumn(name = "note_id", referencedColumnName = "id"))
+	// (NoteHasBeenSharedUser.user_that_note_has_been_shared_to = User.username) -->
+	// User referenced by username instead of id
 	@MapKeyJoinColumn(name = "user_that_note_has_been_shared_to", referencedColumnName = "username")
 	// vale --> permission_level (NoteHasBeenSharedUser.permission_level)
 	@Column(name = "permission_level")
@@ -57,12 +59,10 @@ public abstract  class Note extends BaseEntity {
 	// Optional:
 	// New table (NoteHasTags) with two column (note_id and tag_text)
 	@JoinTable(name = "NoteHasTags", joinColumns = {
-				// Note --> Tag  (NoteHasTags.note_id = Note.note_id)
-				@JoinColumn(name = "note_id", referencedColumnName = "id")
-			}, inverseJoinColumns = {
-				// Tag --> Note  (NoteHasTags.tag_text = Tag.tag_text)
-				@JoinColumn(name = "tag_text", referencedColumnName = "tag_text") 
-			})
+			// Note --> Tag (NoteHasTags.note_id = Note.note_id)
+			@JoinColumn(name = "note_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					// Tag --> Note (NoteHasTags.tag_text = Tag.tag_text)
+					@JoinColumn(name = "tag_text", referencedColumnName = "tag_text") })
 	private List<Tag> tags;
 
 	public Note(User author, String title) {
@@ -113,15 +113,15 @@ public abstract  class Note extends BaseEntity {
 		sharedUsers.put(u, permissionLevel);
 		u.shareNote(this, permissionLevel);
 	}
-	
+
 	public boolean canRead(User user) {
 		return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
 	}
-	
+
 	public boolean canReadAndWrite(User user) {
 		return sharedUsers.containsKey(user) && sharedUsers.get(user) == 2;
-	 }
-	
+	}
+
 	public void setPermission(User user, Integer permissionLevel) {
 		if (permissionLevel > 0)
 			sharedUsers.put(user, permissionLevel);

@@ -64,6 +64,7 @@ public class User extends BaseEntity {
 		this.ownNotes.add(note);
 	}
 
+	// TODO: add this user to note's SharedUsers
 	public void shareNote(Note n, int permissionLevel) {
 		this.sharedNotes.put(n, permissionLevel);
 	}
@@ -71,11 +72,11 @@ public class User extends BaseEntity {
 	public boolean canRead(Note note) {
 		return ownNotes.contains(note) || (sharedNotes.containsKey(note) && sharedNotes.get(note) >= 1);
 	}
-	
+
 	public boolean canReadAndWrite(Note note) {
 		return ownNotes.contains(note) || (sharedNotes.containsKey(note) && sharedNotes.get(note) == 2);
 	}
-	
+
 	public void setPermission(Note note, Integer permissionLevel) {
 		if (permissionLevel > 0)
 			sharedNotes.put(note, permissionLevel);
