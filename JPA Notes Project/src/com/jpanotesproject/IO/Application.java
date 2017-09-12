@@ -1,5 +1,7 @@
 package com.jpanotesproject.IO;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -7,11 +9,11 @@ import javax.persistence.Persistence;
 import com.jpanotesproject.daos.NoteDAO;
 import com.jpanotesproject.daos.TagDAO;
 import com.jpanotesproject.daos.UserDAO;
-
+import com.jpanotesproject.model.AudioNote;
 import com.jpanotesproject.model.Note;
 import com.jpanotesproject.model.Tag;
-import com.jpanotesproject.model.User;
 import com.jpanotesproject.model.TextNote;
+import com.jpanotesproject.model.User;
 
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)
@@ -29,25 +31,16 @@ public class Application {
 		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JPA Notes Project");
 		EntityManager em = emfactory.createEntityManager();
 		em.getTransaction().begin();
-/*
-inheritance_jpa
-		// NotesCRUDService tDAO = new NotesCRUDService();
-		// tDAO.create();
+		/*
+		 * inheritance_jpa // NotesCRUDService tDAO = new NotesCRUDService(); // tDAO.create();
+		 * 
+		 * Tag t = new Tag("haaa"); TagDAO tDAO = new TagDAO(em); tDAO.persist(t);
+		 * 
+		 * User user = new User("user_a", "my_password", "johnsnow@agagaga.com"); UserDAO userDAO = new UserDAO(em); userDAO.persist(user);
+		 * 
+		 * TextNote text_note = new TextNote(user, "title of the note", "text text text"); NotesDAO notesDAO = new NotesDAO(em); notesDAO.persist(text_note);
+		 */
 
-		Tag t = new Tag("haaa");
-		TagDAO tDAO = new TagDAO(em);
-		tDAO.persist(t);
-
-		User user = new User("user_a", "my_password", "johnsnow@agagaga.com");
-		UserDAO userDAO = new UserDAO(em);
-		userDAO.persist(user);
-
-		TextNote text_note = new TextNote(user, "title of the note", "text text text");
-		NotesDAO notesDAO = new NotesDAO(em);
-		notesDAO.persist(text_note);
-*/
-
-	
 		// REALLY NIGGA
 		// USUARIOS: Metinu, Gang, Oceloto, Penquiu, Ulises
 
@@ -144,7 +137,108 @@ inheritance_jpa
 		n4.addTag(t3);
 		n4.addTag(t5);
 
+		/////////////////////////////////////////////// NOW LET'S READ AND MODIFY ////////////////////////////////////////////////////////////////////////////////////////////
+		System.out.println("------------------------------------ READ AND MODIFY ----------------------------------------");
+		System.out.println("---------------------------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------------------------");
 
+		//// Reading N3 NOTA-METINU-C shared to Oceloto (u3) (ReadAndWrite) and Gang (u2) (OnlyRead)
+
+		User uMetinu;
+		uMetinu = uDAO.findById(1); // I know 1 is the ID of Metinu's User (checking the DB with phpmyadmin)
+
+		// Now, is u Metinu?
+
+		System.out.println(uMetinu.getUsername()); // IMPRIME "metinu", --> OK
+
+		List<Note> metinusNotes = uMetinu.getOwnNotes();
+
+		// TODO: null exception control
+		// TODO: que tengamos que recorrer la lista de esta forma nos da una pista de que probablemente en lugar de una lista necesitemos un set (que además no tiene repetidos)
+		Note noteMetinuC = null;
+		for (final Note note : metinusNotes) {
+			if (note.getTitle() == "NOTA-METINU-C") {
+				noteMetinuC = note;
+			}
+		}
+		// NO ME SALE CAMBIARLO A SET. SI LO CAMBIO noteMetinuC sigue siendo NULL
+
+		if (noteMetinuC != null) {
+			System.out.println("NOTA-METINU-C está en el Array de notas propias de Metinu");
+			if (noteMetinuC.canReadAndWrite(u3))
+				System.out.println("Oceloto tiene compartida NOTA-METINU-C con permisos de lectura y escritura");
+			if (noteMetinuC.canReadOnly(u2))
+				System.out.println("Gang tiene compartida NOTA-METINU-C con permisos de solo lectura");
+			if (u3.getSharedNotes().containsKey(noteMetinuC))
+				System.out.println("NOTA-METINU-C también está en el sharedNotes de Oceloto");
+			if (u2.getSharedNotes().containsKey(noteMetinuC))
+				System.out.println("NOTA-METINU-C también está en el sharedNotes de Gang");
+			if (noteMetinuC.getSharedUsers().containsKey(u3))
+				System.out.println("Oceloto también está en el sharedUsers de NOTA-METINU-C");
+			if (noteMetinuC.getSharedUsers().containsKey(u2))
+				System.out.println("Gang también está en el sharedUsers de NOTA-METINU-C");
+		} // --> TODO OK, TODO SE IMPRIME CORRECTAMENTE Y COMO SE ESPERABA, TAL Y COMO ESTÁ EN LA BD
+
+		// AHORA CAMBIEMOS EL NOMBRE DE METINU A MAXIMETINU, DEJEMOS DE COMPARTIR LA NOTA A OCELOTO Y DEMOSLE A GANG PERMISOS TAMBIÉN DE ESCRITURA
+		// POR ÚLTIMO, TAMBIÉN LE AÑADIREMOS A METINU UNA NUEVA NOTA DE AUDIO LLAMADA NOTA-METINU-AUDIO (así de paso probamos la herencia)
+
+		uMetinu.setUsername("Maximetinu");
+		noteMetinuC.setPermission(u3, 0);
+		noteMetinuC.setPermission(u2, 2);
+
+		// Volvemos a hacer las pruebas (aunque se puede comprobar también en phpmyadmin, y de hecho se debe por si algo se duplica en lugar de modificarse, etc
+		if (noteMetinuC != null) {
+			if (!noteMetinuC.canReadAndWrite(u3))
+				System.out.println("Oceloto YA NO tiene compartida NOTA-METINU-C con permisos de lectura y escritura");
+			if (!noteMetinuC.canReadOnly(u2))
+				System.out.println("Gang YA NO tiene compartida NOTA-METINU-C con permisos de solo lectura");
+			if (noteMetinuC.canReadAndWrite(u2))
+				System.out.println("Gang AHORA SI tiene compartida NOTA-METINU-C con permisos de lectura y escritura");
+			if (!u3.getSharedNotes().containsKey(noteMetinuC))
+				System.out.println("NOTA-METINU-C YA NO está en el sharedNotes de Oceloto");
+			if (u2.getSharedNotes().containsKey(noteMetinuC))
+				System.out.println("NOTA-METINU-C también está en el sharedNotes de Gang");
+			if (!noteMetinuC.getSharedUsers().containsKey(u3))
+				System.out.println("Oceloto YA NO está en el sharedUsers de NOTA-METINU-C");
+			if (noteMetinuC.getSharedUsers().containsKey(u2))
+				System.out.println("Gang también está en el sharedUsers de NOTA-METINU-C");
+		} // --> TODO OK (aunque he tenido que corregir cosillas). También en phpmyadmin veo como las colecciones tienen 1 entrada menos
+
+		Note newMetinuNote = new AudioNote(uMetinu, "NOTA-METINU-AUDIO", "AUDIOAUDIOAUDIOAUDIOAUDIO");
+		nDAO.persist(newMetinuNote); // Persistir justo después del new, que si no se guarda solo el estado final y no las posibles modificaciones
+		// (si el estado final fuese el mismo que el inicial no lo notaríamos)
+
+		// Como al crear la nota ya se está añadiendo, esto lo añadiría por duplicado. Si fuera un Set no pasaría, si comprobasemos duplicados al añadir a la List tampoco, pero en ambos casos nunca se
+		// rellenaría ownNotes y da nulos
+		// uMetinu.addAuthorNote(newMetinuNote);
+
+		Note audioNoteTest = null;
+		metinusNotes = uMetinu.getOwnNotes();
+		for (final Note note : metinusNotes) {
+			if (note.getTitle() == "NOTA-METINU-AUDIO") {
+				audioNoteTest = note;
+			}
+		}
+
+		if (audioNoteTest != null) {
+			System.out.println("NOTA-METINU-AUDIO está en el Array de notas propias de Metinu");
+		} /// --> TODO OK
+
+		// CONCLUSIÓN: LECTURA Y MODIFICACIÓN FUNCIONAN, PERO FALTAN COSAS
+
+		// - En lugar de buscar al usuario Metinu por el ID (que en la aplicación ni se conocerá), hay que implementar el método UserDAO.findByUsername(), consultando con SQL
+
+		// - Aparte de FindByUsername, se pueden implementar List<Note> UserDAO.getUserSharedNotes(u) por ejemplo, pero sería redundante porque es más fácil hacer
+		// UserDAO.findByUsername("Metinu").getSharedNotes().
+
+		// - IMPORTANTE: deberíamos cambiar la lista de OwnNotes por un set, y también la lista de tags de las notas. O eso o comprobar duplicados. Pero cuidado que al hacerlo no funciona bien, hay
+		// que encontrar por qué
+
+		System.out.println("---------------------------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------------------------");
+		System.out.println("---------------------------------------------------------------------------------------------");
 		em.getTransaction().commit();
 
 		em.close();

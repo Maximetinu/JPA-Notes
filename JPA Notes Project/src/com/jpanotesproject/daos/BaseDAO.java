@@ -19,6 +19,11 @@ public abstract class BaseDAO<E extends BaseEntity> {
 		return entityManager.find(type, typeId);
 	}
 
+	public E findById(int typeId) {
+		Long l = new Long(typeId);
+		return entityManager.find(type, l);
+	}
+
 	public void persist(E entity) {
 		if (entity.getId() != null)
 			entityManager.merge(entity);

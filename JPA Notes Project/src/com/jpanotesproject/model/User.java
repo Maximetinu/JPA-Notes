@@ -38,9 +38,8 @@ public class User extends BaseEntity {
 	private Map<Note, Integer> sharedNotes;
 
 	@OneToMany
-	@JoinTable(name = "UserHasNotes", joinColumns = {
-			@JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
-					@JoinColumn(name = "note_id", referencedColumnName = "id") })
+	@JoinTable(name = "UserHasNotes", joinColumns = { @JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
+			@JoinColumn(name = "note_id", referencedColumnName = "id") })
 	private List<Note> ownNotes;
 
 	public User(String name, String password, String email) {
@@ -60,13 +59,31 @@ public class User extends BaseEntity {
 		super();
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
 	public void addAuthorNote(Note note) {
+		// If ! ownNotes.contains(note) ¿?¿?¿? Solo si es una List. Si fuera un Set no habría que hacer esta comprobación
+		// Luego, si hago esta comprobación parece que ownNotes no se rellena nunca
+		// if (!ownNotes.contains(note))
 		this.ownNotes.add(note);
 	}
 
-	// TODO: add this user to note's SharedUsers
+	// TODO: add this user to note's SharedUsers ?¿?¿
 	public void shareNote(Note n, int permissionLevel) {
-		this.sharedNotes.put(n, permissionLevel);
+		if (permissionLevel > 0)
+			this.sharedNotes.put(n, permissionLevel);
+		else
+			this.sharedNotes.remove(n);
+	}
+
+	public void unshareNote(Note n) {
+		this.sharedNotes.remove(n);
 	}
 
 	public boolean canRead(Note note) {

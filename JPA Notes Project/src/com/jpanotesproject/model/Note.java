@@ -118,6 +118,10 @@ public abstract class Note extends BaseEntity {
 		return sharedUsers.containsKey(user) && sharedUsers.get(user) >= 1;
 	}
 
+	public boolean canReadOnly(User user) {
+		return sharedUsers.containsKey(user) && sharedUsers.get(user) == 1;
+	}
+
 	public boolean canReadAndWrite(User user) {
 		return sharedUsers.containsKey(user) && sharedUsers.get(user) == 2;
 	}
@@ -125,8 +129,10 @@ public abstract class Note extends BaseEntity {
 	public void setPermission(User user, Integer permissionLevel) {
 		if (permissionLevel > 0)
 			sharedUsers.put(user, permissionLevel);
-		else
+		else {
 			sharedUsers.remove(user);
+			user.shareNote(this, 0);
+		}
 	}
 
 	public java.sql.Timestamp getCreationDate() {
@@ -149,6 +155,10 @@ public abstract class Note extends BaseEntity {
 	public void setTitle(String title) {
 		this.title = title;
 		this.updateLastEditDate();
+	}
+
+	public Map<User, Integer> getSharedUsers() {
+		return sharedUsers;
 	}
 
 	@Override
