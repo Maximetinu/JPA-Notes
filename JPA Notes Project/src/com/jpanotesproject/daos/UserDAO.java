@@ -20,11 +20,8 @@ public class UserDAO  extends BaseDAO<User>{
 	public User findByUsername(String username) {
 		User result = null;
 		
-		String query_str = "SELECT u FROM `User` u WHERE u.username = '" + username + "'";
-		
-		Query query  =   context.createQuery(query_str);
-
-		System.out.println("--------------------------------------------------------------------------------------------- " + query.getFirstResult());
+		Query query  =   context.createQuery("select u from User u where u.username=:usr").setParameter("usr", username);
+		result = (User) query.getResultList().get(0);
 		
 		return result;
 		

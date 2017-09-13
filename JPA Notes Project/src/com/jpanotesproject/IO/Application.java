@@ -237,7 +237,7 @@ public class Application {
 		// que encontrar por qu�
 
 		User user_retrieval  = uDAO.findByUsername("penquiu");
-		//System.out.println("----> USER RETRIEVAL => " + user_retrieval.getUsername());
+		System.out.println("----> USER RETRIEVAL => " + user_retrieval.getUsername());
 	
 		
 		
