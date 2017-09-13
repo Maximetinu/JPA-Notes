@@ -68,6 +68,10 @@ public class User extends BaseEntity {
 		this.username = username;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
 	public void addAuthorNote(Note note) {
 		// If ! ownNotes.contains(note) �?�?�? Solo si es una List. Si fuera un Set no habr�a que hacer esta comprobaci�n
 		// Luego, si hago esta comprobaci�n parece que ownNotes no se rellena nunca
