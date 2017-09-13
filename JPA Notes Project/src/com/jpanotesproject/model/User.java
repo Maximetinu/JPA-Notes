@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyJoinColumn;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -68,13 +69,13 @@ public class User extends BaseEntity {
 	}
 
 	public void addAuthorNote(Note note) {
-		// If ! ownNotes.contains(note) ¿?¿?¿? Solo si es una List. Si fuera un Set no habría que hacer esta comprobación
-		// Luego, si hago esta comprobación parece que ownNotes no se rellena nunca
+		// If ! ownNotes.contains(note) ï¿½?ï¿½?ï¿½? Solo si es una List. Si fuera un Set no habrï¿½a que hacer esta comprobaciï¿½n
+		// Luego, si hago esta comprobaciï¿½n parece que ownNotes no se rellena nunca
 		// if (!ownNotes.contains(note))
 		this.ownNotes.add(note);
 	}
 
-	// TODO: add this user to note's SharedUsers ?¿?¿
+	// TODO: add this user to note's SharedUsers ?ï¿½?ï¿½
 	public void shareNote(Note n, int permissionLevel) {
 		if (permissionLevel > 0)
 			this.sharedNotes.put(n, permissionLevel);

@@ -5,6 +5,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 
 import com.jpanotesproject.daos.NoteDAO;
 import com.jpanotesproject.daos.TagDAO;
@@ -236,7 +237,8 @@ public class Application {
 		// que encontrar por qu�
 
 		User user_retrieval  = uDAO.findByUsername("penquiu");
-		System.out.println("----> USER RETRIEVAL => " + user_retrieval.getUsername());
+		//System.out.println("----> USER RETRIEVAL => " + user_retrieval.getUsername());
+	
 		
 		
 		System.out.println("---------------------------------------------------------------------------------------------");
