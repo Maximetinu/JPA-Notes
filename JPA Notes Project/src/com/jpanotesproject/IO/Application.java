@@ -155,7 +155,7 @@ public class Application {
 		List<Note> metinusNotes = uMetinu.getOwnNotes();
 
 		// TODO: null exception control
-		// TODO: que tengamos que recorrer la lista de esta forma nos da una pista de que probablemente en lugar de una lista necesitemos un set (que además no tiene repetidos)
+		// TODO: que tengamos que recorrer la lista de esta forma nos da una pista de que probablemente en lugar de una lista necesitemos un set (que ademï¿½s no tiene repetidos)
 		Note noteMetinuC = null;
 		for (final Note note : metinusNotes) {
 			if (note.getTitle() == "NOTA-METINU-C") {
@@ -165,29 +165,29 @@ public class Application {
 		// NO ME SALE CAMBIARLO A SET. SI LO CAMBIO noteMetinuC sigue siendo NULL
 
 		if (noteMetinuC != null) {
-			System.out.println("NOTA-METINU-C está en el Array de notas propias de Metinu");
+			System.out.println("NOTA-METINU-C estï¿½ en el Array de notas propias de Metinu");
 			if (noteMetinuC.canReadAndWrite(u3))
 				System.out.println("Oceloto tiene compartida NOTA-METINU-C con permisos de lectura y escritura");
 			if (noteMetinuC.canReadOnly(u2))
 				System.out.println("Gang tiene compartida NOTA-METINU-C con permisos de solo lectura");
 			if (u3.getSharedNotes().containsKey(noteMetinuC))
-				System.out.println("NOTA-METINU-C también está en el sharedNotes de Oceloto");
+				System.out.println("NOTA-METINU-C tambiï¿½n estï¿½ en el sharedNotes de Oceloto");
 			if (u2.getSharedNotes().containsKey(noteMetinuC))
-				System.out.println("NOTA-METINU-C también está en el sharedNotes de Gang");
+				System.out.println("NOTA-METINU-C tambiï¿½n estï¿½ en el sharedNotes de Gang");
 			if (noteMetinuC.getSharedUsers().containsKey(u3))
-				System.out.println("Oceloto también está en el sharedUsers de NOTA-METINU-C");
+				System.out.println("Oceloto tambiï¿½n estï¿½ en el sharedUsers de NOTA-METINU-C");
 			if (noteMetinuC.getSharedUsers().containsKey(u2))
-				System.out.println("Gang también está en el sharedUsers de NOTA-METINU-C");
-		} // --> TODO OK, TODO SE IMPRIME CORRECTAMENTE Y COMO SE ESPERABA, TAL Y COMO ESTÁ EN LA BD
+				System.out.println("Gang tambiï¿½n estï¿½ en el sharedUsers de NOTA-METINU-C");
+		} // --> TODO OK, TODO SE IMPRIME CORRECTAMENTE Y COMO SE ESPERABA, TAL Y COMO ESTï¿½ EN LA BD
 
-		// AHORA CAMBIEMOS EL NOMBRE DE METINU A MAXIMETINU, DEJEMOS DE COMPARTIR LA NOTA A OCELOTO Y DEMOSLE A GANG PERMISOS TAMBIÉN DE ESCRITURA
-		// POR ÚLTIMO, TAMBIÉN LE AÑADIREMOS A METINU UNA NUEVA NOTA DE AUDIO LLAMADA NOTA-METINU-AUDIO (así de paso probamos la herencia)
+		// AHORA CAMBIEMOS EL NOMBRE DE METINU A MAXIMETINU, DEJEMOS DE COMPARTIR LA NOTA A OCELOTO Y DEMOSLE A GANG PERMISOS TAMBIï¿½N DE ESCRITURA
+		// POR ï¿½LTIMO, TAMBIï¿½N LE Aï¿½ADIREMOS A METINU UNA NUEVA NOTA DE AUDIO LLAMADA NOTA-METINU-AUDIO (asï¿½ de paso probamos la herencia)
 
 		uMetinu.setUsername("Maximetinu");
 		noteMetinuC.setPermission(u3, 0);
 		noteMetinuC.setPermission(u2, 2);
 
-		// Volvemos a hacer las pruebas (aunque se puede comprobar también en phpmyadmin, y de hecho se debe por si algo se duplica en lugar de modificarse, etc
+		// Volvemos a hacer las pruebas (aunque se puede comprobar tambiï¿½n en phpmyadmin, y de hecho se debe por si algo se duplica en lugar de modificarse, etc
 		if (noteMetinuC != null) {
 			if (!noteMetinuC.canReadAndWrite(u3))
 				System.out.println("Oceloto YA NO tiene compartida NOTA-METINU-C con permisos de lectura y escritura");
@@ -196,21 +196,21 @@ public class Application {
 			if (noteMetinuC.canReadAndWrite(u2))
 				System.out.println("Gang AHORA SI tiene compartida NOTA-METINU-C con permisos de lectura y escritura");
 			if (!u3.getSharedNotes().containsKey(noteMetinuC))
-				System.out.println("NOTA-METINU-C YA NO está en el sharedNotes de Oceloto");
+				System.out.println("NOTA-METINU-C YA NO estï¿½ en el sharedNotes de Oceloto");
 			if (u2.getSharedNotes().containsKey(noteMetinuC))
-				System.out.println("NOTA-METINU-C también está en el sharedNotes de Gang");
+				System.out.println("NOTA-METINU-C tambiï¿½n estï¿½ en el sharedNotes de Gang");
 			if (!noteMetinuC.getSharedUsers().containsKey(u3))
-				System.out.println("Oceloto YA NO está en el sharedUsers de NOTA-METINU-C");
+				System.out.println("Oceloto YA NO estï¿½ en el sharedUsers de NOTA-METINU-C");
 			if (noteMetinuC.getSharedUsers().containsKey(u2))
-				System.out.println("Gang también está en el sharedUsers de NOTA-METINU-C");
-		} // --> TODO OK (aunque he tenido que corregir cosillas). También en phpmyadmin veo como las colecciones tienen 1 entrada menos
+				System.out.println("Gang tambiï¿½n estï¿½ en el sharedUsers de NOTA-METINU-C");
+		} // --> TODO OK (aunque he tenido que corregir cosillas). Tambiï¿½n en phpmyadmin veo como las colecciones tienen 1 entrada menos
 
 		Note newMetinuNote = new AudioNote(uMetinu, "NOTA-METINU-AUDIO", "AUDIOAUDIOAUDIOAUDIOAUDIO");
-		nDAO.persist(newMetinuNote); // Persistir justo después del new, que si no se guarda solo el estado final y no las posibles modificaciones
-		// (si el estado final fuese el mismo que el inicial no lo notaríamos)
+		nDAO.persist(newMetinuNote); // Persistir justo despuï¿½s del new, que si no se guarda solo el estado final y no las posibles modificaciones
+		// (si el estado final fuese el mismo que el inicial no lo notarï¿½amos)
 
-		// Como al crear la nota ya se está añadiendo, esto lo añadiría por duplicado. Si fuera un Set no pasaría, si comprobasemos duplicados al añadir a la List tampoco, pero en ambos casos nunca se
-		// rellenaría ownNotes y da nulos
+		// Como al crear la nota ya se estï¿½ aï¿½adiendo, esto lo aï¿½adirï¿½a por duplicado. Si fuera un Set no pasarï¿½a, si comprobasemos duplicados al aï¿½adir a la List tampoco, pero en ambos casos nunca se
+		// rellenarï¿½a ownNotes y da nulos
 		// uMetinu.addAuthorNote(newMetinuNote);
 
 		Note audioNoteTest = null;
@@ -222,19 +222,23 @@ public class Application {
 		}
 
 		if (audioNoteTest != null) {
-			System.out.println("NOTA-METINU-AUDIO está en el Array de notas propias de Metinu");
+			System.out.println("NOTA-METINU-AUDIO estï¿½ en el Array de notas propias de Metinu");
 		} /// --> TODO OK
 
-		// CONCLUSIÓN: LECTURA Y MODIFICACIÓN FUNCIONAN, PERO FALTAN COSAS
+		// CONCLUSIï¿½N: LECTURA Y MODIFICACIï¿½N FUNCIONAN, PERO FALTAN COSAS
 
-		// - En lugar de buscar al usuario Metinu por el ID (que en la aplicación ni se conocerá), hay que implementar el método UserDAO.findByUsername(), consultando con SQL
+		// - En lugar de buscar al usuario Metinu por el ID (que en la aplicaciï¿½n ni se conocerï¿½), hay que implementar el mï¿½todo UserDAO.findByUsername(), consultando con SQL
 
-		// - Aparte de FindByUsername, se pueden implementar List<Note> UserDAO.getUserSharedNotes(u) por ejemplo, pero sería redundante porque es más fácil hacer
+		// - Aparte de FindByUsername, se pueden implementar List<Note> UserDAO.getUserSharedNotes(u) por ejemplo, pero serï¿½a redundante porque es mï¿½s fï¿½cil hacer
 		// UserDAO.findByUsername("Metinu").getSharedNotes().
 
-		// - IMPORTANTE: deberíamos cambiar la lista de OwnNotes por un set, y también la lista de tags de las notas. O eso o comprobar duplicados. Pero cuidado que al hacerlo no funciona bien, hay
-		// que encontrar por qué
+		// - IMPORTANTE: deberï¿½amos cambiar la lista de OwnNotes por un set, y tambiï¿½n la lista de tags de las notas. O eso o comprobar duplicados. Pero cuidado que al hacerlo no funciona bien, hay
+		// que encontrar por quï¿½
 
+		User user_retrieval  = uDAO.findByUsername("penquiu");
+		System.out.println("----> USER RETRIEVAL => " + user_retrieval.getUsername());
+		
+		
 		System.out.println("---------------------------------------------------------------------------------------------");
 		System.out.println("---------------------------------------------------------------------------------------------");
 		System.out.println("---------------------------------------------------------------------------------------------");
