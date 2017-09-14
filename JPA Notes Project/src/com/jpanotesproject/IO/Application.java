@@ -284,7 +284,8 @@ public class Application {
 
 					System.out.println("Registered successfully " + new_user.getUsername());
 					current_user = new_user;
-					
+
+					em.getTransaction().commit();
 	        		
 	            } else if ("2".equals(input)) {
 
@@ -313,7 +314,6 @@ public class Application {
 					stop = true;
 
 				}
-				em.getTransaction().commit();
 
 			}
 
@@ -322,22 +322,62 @@ public class Application {
 				System.out.println("1 - List notes");
 				System.out.println("2 - List shared notes");
 				System.out.println("3 - Show note");
-				System.out.println("4 - New text notes");
-				System.out.println("5 - Exit");
+				System.out.println("4 - New text note");
+				System.out.println("5 - Edit note");
+				System.out.println("6 - Exit");
 	            input = keyboard.nextLine();
 	            
 	            
 	            if ("1".equals(input)) {
-	            	
+
+					System.out.println("You have " + current_user.getOwnNotes().size() + " note(s)");
 	            	for (Note note : current_user.getOwnNotes()) {
 	        			System.out.println(note.getTitle() + " - " + note.getLastEditDate());
 	        		}
-
 	            		
 
 	            } else if ("2".equals(input)) {
+
+
+					System.out.println("You have " + current_user.getSharedNotes().size() + " shared note(s)");
+	            	for (Note note : current_user.getSharedNotes().keySet()) {
+	        			System.out.println(note.getTitle() + " - " + note.getLastEditDate());
+	        		}
 	            	
 	            } else if ("3".equals(input)) {
+					System.out.println("Note's title?");
+					String title_note = keyboard.nextLine();
+					
+					Note note_retrieval = null;
+
+	            	for (Note note : current_user.getOwnNotes()) {
+	            		if (note.getTitle().equals(title_note)) {
+	            			note_retrieval = note;
+	            		}
+	        		}
+	            	
+	            	if (note_retrieval == null) {
+		            	for (Note note : current_user.getSharedNotes().keySet()) {
+		            		if (note.getTitle().equals(title_note)) {
+		            			note_retrieval = note;
+		            		}
+		        		}
+	            	}
+	            	
+	            	if (note_retrieval == null) {
+						System.out.println(title_note + " not found.");
+	            	} else {
+						System.out.println(note_retrieval.getTitle() + " - " + note_retrieval.getLastEditDate());
+						System.out.println("Tags: ");
+						
+		            	for (Tag tag : note_retrieval.getTagsList()) {
+		            		System.out.print(tag.getTagText() + " ");
+		        		}
+						
+						System.out.println("\n-------\n");
+						System.out.println(((TextNote)note_retrieval).getText());
+						System.out.println("\n-------\n");
+	            	}
 	            	
 	            } else if ("4".equals(input)) {
 
@@ -348,28 +388,184 @@ public class Application {
 					System.out.println("Text:");
 					String text = keyboard.nextLine();
 					
+					TextNote new_textnote = null;
 
 					try {
-						TextNote new_textnote = new TextNote(current_user, title, text);
+						new_textnote = new TextNote(current_user, title, text);
 						current_user.addAuthorNote(new_textnote);
 						nDAO.persist(new_textnote);
 					} catch (Exception e) {
 						e.getMessage();
 					}
+					
+
+					System.out.println("Add tags to " + title);
+					boolean stop_add_tags = false;
+					while (!stop_add_tags) {
+						System.out.println("Insert 0 to stop ");
+			            String new_tag_str = keyboard.nextLine();
+			            
+			            if (!new_tag_str.equals("0")) {
+			            	
+			            	Tag new_tag = null;
+			            	
+							try {
+								new_tag = tDAO.findByTag(new_tag_str);
+								if (new_tag == null) {
+									new_tag = new Tag(new_tag_str);
+									tDAO.persist(new_tag);
+								}
+								new_textnote.addTag(new_tag);
+								nDAO.persist(new_textnote);
+							} catch (Exception e) {
+								e.getMessage();
+							}
+							System.out.println(new_tag_str + " added.");
+			            } else {
+			            	stop_add_tags = true;
+			            }
+			            
+						
+					}
+					
 
 					System.out.println("Saved.");
+					em.getTransaction().commit();
 	            	
 	            } else if ("5".equals(input)) {
+	            	boolean can_edit = true;
+	            	
+					System.out.println("Note's title?");
+					String title_note = keyboard.nextLine();
+					
+					Note note_retrieval = null;
+
+	            	for (Note note : current_user.getOwnNotes()) {
+	            		if (note.getTitle().equals(title_note)) {
+	            			note_retrieval = note;
+	            		}
+	        		}
+	            	
+	            	if (note_retrieval == null) {
+		            	for (Note note : current_user.getSharedNotes().keySet()) {
+		            		if (note.getTitle().equals(title_note)) {
+		            			note_retrieval = note;
+		            		}
+		        		}
+		            	
+		            	if (note_retrieval != null && !note_retrieval.canReadAndWrite(current_user)) {
+							System.out.println("You do not have permission to edit this note.");
+		            		can_edit = false;
+		            	}
+	            	}
+	            	
+	            	if (note_retrieval == null) {
+						System.out.println(title_note + " not found.");
+	            	} else if(can_edit) {
+	            		boolean stop_edit = false;
+
+	            		while (!stop_edit) {
+	            			System.out.println("Choose an option:");
+	            			System.out.println("1 - Add tags");
+	            			System.out.println("2 - Edit content");
+	            			System.out.println("3 - Share");
+	            			System.out.println("4 - Return");
+	           				input = keyboard.nextLine();
+	           				
+	           				if ("1".equals(input)) {
+	           					boolean stop_add_tags = false;
+	        					while (!stop_add_tags) {
+	        						System.out.println("Insert 0 to stop ");
+	        			            String new_tag_str = keyboard.nextLine();
+	        			            
+	        			            if (!new_tag_str.equals("0")) {
+
+	        			            	Tag new_tag = null;
+	        			            	
+	        							try {
+	        								new_tag = tDAO.findByTag(new_tag_str);
+	        								if (new_tag == null) {
+	        									new_tag = new Tag(new_tag_str);
+	        									tDAO.persist(new_tag);
+	        								}
+	        								note_retrieval.addTag(new_tag);
+	        								nDAO.persist(note_retrieval);
+	        							} catch (Exception e) {
+	        								e.getMessage();
+	        							}
+	        							
+	        							System.out.println(new_tag_str + " added.");
+	        			            } else {
+	        			            	stop_add_tags = true;
+	        			            }
+	        					}
+
+        						
+	           				} else if  ("2".equals(input)) {
+		           				String new_content = keyboard.nextLine();
+		           				try {
+    								((TextNote)note_retrieval).setText(new_content);
+    								
+    							} catch (Exception e) {
+    								e.getMessage();
+    							}
+	        						
+	           				} else if  ("3".equals(input)) {
+		            			System.out.println("Share " + note_retrieval.getTitle() + " with: ");
+		           				String share_with_user_str = keyboard.nextLine();
+		           				
+		           				User share_with_user = null;
+		           				try {
+    								share_with_user = uDAO.findByUsername(share_with_user_str);
+    								
+    							} catch (Exception e) {
+    								e.getMessage();
+    							}
+		           				
+		           				if (share_with_user == null || share_with_user.getUsername().equals(current_user.getUsername())) {
+			            			System.out.println("Impossible share with " + share_with_user_str);
+		           				} else {
+		           					note_retrieval.shareWith(share_with_user);
+
+		           					boolean repeat = true;
+			           				while (repeat) {
+				            			System.out.println("Can " + share_with_user_str + " edit " + note_retrieval.getTitle() + "? (y|n)");
+				           				String can_w = keyboard.nextLine();
+
+			           					
+				           				if (can_w.equals("y") || can_w.equals("yes")) {
+				           					share_with_user.shareNote(note_retrieval, 2);
+				           					repeat = false;
+				           				} else if (can_w.equals("n") || can_w.equals("no")) {
+				           					share_with_user.shareNote(note_retrieval, 1);
+				           					repeat = false;
+				           				} 
+		           					}
+
+    								uDAO.persist(share_with_user);
+    								nDAO.persist(note_retrieval);
+			           				em.getTransaction().commit();
+		           				}
+		            			
+	           					
+	           				} else if  ("5".equals(input)) {
+	           					stop_edit = true;
+	           				} 
+	            		
+	            		}
+	            	}
+	            	
+	            } else if ("6".equals(input)) {
 	            	
 	            	stop = true;
 	            	
 	            }
+
 				
 			}
 
 			System.out.println("");
 			
-			em.getTransaction().commit();
 		}
 
 		em.close();
