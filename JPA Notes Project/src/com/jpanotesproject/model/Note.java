@@ -30,7 +30,7 @@ public abstract class Note extends BaseEntity {
 	private User author;
 
 	@ManyToMany
-	@JoinTable(name = "NoteHasTags", joinColumns = { @JoinColumn(name = "note_id", referencedColumnName = "id") }, inverseJoinColumns = {
+	@JoinTable(name = "Note_Has_Tags", joinColumns = { @JoinColumn(name = "note_id", referencedColumnName = "id") }, inverseJoinColumns = {
 			@JoinColumn(name = "tag_text", referencedColumnName = "tag_text") })
 	private List<Tag> tags;
 

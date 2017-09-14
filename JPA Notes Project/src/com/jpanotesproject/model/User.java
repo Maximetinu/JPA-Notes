@@ -32,13 +32,13 @@ public class User extends BaseEntity {
 	private java.sql.Timestamp registrationDate;
 
 	@ElementCollection
-	@CollectionTable(name = "UserHasSharedNotes", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
+	@CollectionTable(name = "User_Has_Shared_Notes", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
 	@MapKeyJoinColumn(name = "shared_note", referencedColumnName = "id")
-	@Column(name = "PERMISSION_LEVEL")
+	@Column(name = "permission_level")
 	private Map<Note, Integer> sharedNotes;
 
 	@OneToMany
-	@JoinTable(name = "UserHasNotes", joinColumns = { @JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
+	@JoinTable(name = "User_Has_Notes", joinColumns = { @JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
 			@JoinColumn(name = "note_id", referencedColumnName = "id") })
 	private List<Note> ownNotes;
 

@@ -2,19 +2,19 @@ ALTER TABLE NOTE DROP FOREIGN KEY FK_NOTE_author
 ALTER TABLE TextNote DROP FOREIGN KEY FK_TextNote_id
 ALTER TABLE AudioNote DROP FOREIGN KEY FK_AudioNote_id
 ALTER TABLE ImageNote DROP FOREIGN KEY FK_ImageNote_id
-ALTER TABLE NoteHasTags DROP FOREIGN KEY FK_NoteHasTags_note_id
-ALTER TABLE NoteHasTags DROP FOREIGN KEY FK_NoteHasTags_tag_text
-ALTER TABLE UserHasSharedNotes DROP FOREIGN KEY FK_UserHasSharedNotes_shared_note
-ALTER TABLE UserHasSharedNotes DROP FOREIGN KEY FK_UserHasSharedNotes_username
-ALTER TABLE UserHasNotes DROP FOREIGN KEY FK_UserHasNotes_author_name
-ALTER TABLE UserHasNotes DROP FOREIGN KEY FK_UserHasNotes_note_id
+ALTER TABLE Note_Has_Tags DROP FOREIGN KEY FK_Note_Has_Tags_tag_text
+ALTER TABLE Note_Has_Tags DROP FOREIGN KEY FK_Note_Has_Tags_note_id
+ALTER TABLE User_Has_Shared_Notes DROP FOREIGN KEY FK_User_Has_Shared_Notes_shared_note
+ALTER TABLE User_Has_Shared_Notes DROP FOREIGN KEY FK_User_Has_Shared_Notes_username
+ALTER TABLE User_Has_Notes DROP FOREIGN KEY FK_User_Has_Notes_author_name
+ALTER TABLE User_Has_Notes DROP FOREIGN KEY FK_User_Has_Notes_note_id
 DROP TABLE NOTE
 DROP TABLE User
 DROP TABLE tag
 DROP TABLE TextNote
 DROP TABLE AudioNote
 DROP TABLE ImageNote
-DROP TABLE NoteHasTags
-DROP TABLE UserHasSharedNotes
-DROP TABLE UserHasNotes
+DROP TABLE Note_Has_Tags
+DROP TABLE User_Has_Shared_Notes
+DROP TABLE User_Has_Notes
 DELETE FROM SEQUENCE WHERE SEQ_NAME = 'SEQ_GEN'
