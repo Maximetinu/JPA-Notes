@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Note extends BaseEntity {
+public /* abstract */ class Note extends BaseEntity {
 
 	@Column(name = "title", length = 255)
 	private String title;
