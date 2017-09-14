@@ -305,6 +305,7 @@ public class Application {
 		           
 					System.out.println("Registered successfully " + new_user.getUsername());
 					current_user = new_user;
+					/********/stop = true;
 	        		
 	            } else if ("2".equals(input)) {
 
@@ -337,15 +338,35 @@ public class Application {
 			} 
 
 			if (current_user != null) {
-				
+				System.out.println("Choose an option:");
+				System.out.println("1 - List notes");
+				System.out.println("2 - Show note");
+				System.out.println("3 - Exit");
+	            input = keyboard.nextLine();
+	            
+	            
+	            if ("1".equals(input)) {
+
+	            		
+
+	            } else if ("2".equals(input)) {
+
+
+	            	
+	            } else if ("3".equals(input)) {
+	            	
+	            	stop = true;
+	            	
+	            }
 				
 			}
 			
 			System.out.println("");
+			em.getTransaction().commit();
 			
 		}
 		
-		
+
 		em.close();
 		emfactory.close();
 	}
