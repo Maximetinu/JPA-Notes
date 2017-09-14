@@ -12,7 +12,7 @@
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
 			<property name="eclipselink.ddl-generation.output-mode" value="database" />
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/notesdb"/>
-			<property name="javax.persistence.jdbc.user" value="lifka"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
 			<property name="javax.persistence.jdbc.password" value="javiguapo1"/>
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
 			<property name="eclipselink.logging.level" value="FINE"/>
