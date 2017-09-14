@@ -9,8 +9,10 @@
 		<class>com.jpanotesproject.model.AudioNote</class>
 		<class>com.jpanotesproject.model.ImageNote</class>
 		<properties>
-            <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
-			<property name="eclipselink.ddl-generation.output-mode" value="database" />
+			<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+		    <property name="javax.persistence.schema-generation.scripts.action" value="drop-and-create"/>
+		    <property name="javax.persistence.schema-generation.scripts.create-target" value="META-INF/Create.ddl"/>
+		    <property name="javax.persistence.schema-generation.scripts.drop-target" value="META-INF/Drop.ddl"/>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/notesdb"/>
 			<property name="javax.persistence.jdbc.user" value="lifka"/>
 			<property name="javax.persistence.jdbc.password" value="javiguapo1"/>
