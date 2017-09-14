@@ -313,26 +313,53 @@ public class Application {
 					stop = true;
 
 				}
+				em.getTransaction().commit();
 
 			}
 
 			if (current_user != null) {
 				System.out.println("Choose an option:");
 				System.out.println("1 - List notes");
-				System.out.println("2 - Show note");
-				System.out.println("3 - Exit");
+				System.out.println("2 - List shared notes");
+				System.out.println("3 - Show note");
+				System.out.println("4 - New text notes");
+				System.out.println("5 - Exit");
 	            input = keyboard.nextLine();
 	            
 	            
 	            if ("1".equals(input)) {
+	            	
+	            	for (Note note : current_user.getOwnNotes()) {
+	        			System.out.println(note.getTitle() + " - " + note.getLastEditDate());
+	        		}
 
 	            		
 
 	            } else if ("2".equals(input)) {
-
-
 	            	
 	            } else if ("3".equals(input)) {
+	            	
+	            } else if ("4".equals(input)) {
+
+
+					System.out.println("Title:");
+					String title = keyboard.nextLine();
+
+					System.out.println("Text:");
+					String text = keyboard.nextLine();
+					
+
+					try {
+						TextNote new_textnote = new TextNote(current_user, title, text);
+						current_user.addAuthorNote(new_textnote);
+						nDAO.persist(new_textnote);
+					} catch (Exception e) {
+						e.getMessage();
+					}
+
+					System.out.println("Saved.");
+	            	
+	            } else if ("5".equals(input)) {
 	            	
 	            	stop = true;
 	            	
