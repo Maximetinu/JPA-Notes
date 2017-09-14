@@ -12,7 +12,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,13 +32,13 @@ public class User extends BaseEntity {
 	private java.sql.Timestamp registrationDate;
 
 	@ElementCollection
-	@CollectionTable(name = "UserHasSharedNotes", joinColumns = @JoinColumn(name = "username", referencedColumnName = "username"))
+	@CollectionTable(name = "User_Has_Shared_Notes", joinColumns = @JoinColumn(name = "shared_to", referencedColumnName = "username"))
 	@MapKeyJoinColumn(name = "shared_note", referencedColumnName = "id")
-	@Column(name = "PERMISSION_LEVEL")
+	@Column(name = "permission_level")
 	private Map<Note, Integer> sharedNotes;
 
 	@OneToMany
-	@JoinTable(name = "UserHasNotes", joinColumns = { @JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
+	@JoinTable(name = "User_Has_Notes", joinColumns = { @JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
 			@JoinColumn(name = "note_id", referencedColumnName = "id") })
 	private List<Note> ownNotes;
 
@@ -73,13 +72,9 @@ public class User extends BaseEntity {
 	}
 
 	public void addAuthorNote(Note note) {
-		// If ! ownNotes.contains(note) �?�?�? Solo si es una List. Si fuera un Set no habr�a que hacer esta comprobaci�n
-		// Luego, si hago esta comprobaci�n parece que ownNotes no se rellena nunca
-		// if (!ownNotes.contains(note))
 		this.ownNotes.add(note);
 	}
 
-	// TODO: add this user to note's SharedUsers ?�?�
 	public void shareNote(Note n, int permissionLevel) {
 		if (permissionLevel > 0)
 			this.sharedNotes.put(n, permissionLevel);
@@ -105,10 +100,6 @@ public class User extends BaseEntity {
 		else
 			sharedNotes.remove(note);
 	}
-
-	// public Map<Note, Integer> getSharedNotes() {
-	// return sharedNotes;
-	// }
 
 	public java.sql.Timestamp getRegistrationDate() {
 		return registrationDate;

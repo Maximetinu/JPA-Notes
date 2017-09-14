@@ -5,10 +5,10 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tag")
-public class Tag extends BaseEntity{
+@Table(name = "tag")
+public class Tag extends BaseEntity {
 
-	@Column(name = "TAG_TEXT", unique = true, length = 255)
+	@Column(name = "tag_text", unique = true, length = 255)
 	private String tagText;
 
 	public Tag() {

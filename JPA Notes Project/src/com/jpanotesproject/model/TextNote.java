@@ -5,24 +5,24 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TextNote")
-public class TextNote extends Note  {
+@Table(name = "Text_Note")
+public class TextNote extends Note {
 	@Column(name = "content")
 	private String text = "";
-	
+
 	public TextNote() {
 		super();
 	}
-	
+
 	public TextNote(User author, String title, String text) {
 		super(author, title);
 		this.text = text;
 	}
-	
+
 	public String getText() {
 		return text;
 	}
-	
+
 	public void setText(String text) {
 		this.text = text;
 	}
