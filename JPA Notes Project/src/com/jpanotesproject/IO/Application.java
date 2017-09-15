@@ -556,7 +556,7 @@ public class Application {
 		           				}
 		            			
 	           					
-	           				} else if  ("5".equals(input)) {
+	           				} else if  ("4".equals(input)) {
 	           					stop_edit = true;
 	           				} 
 	            		
