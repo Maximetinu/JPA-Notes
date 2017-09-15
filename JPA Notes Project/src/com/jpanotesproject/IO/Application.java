@@ -266,26 +266,34 @@ public class Application {
 
 					System.out.println("Name:");
 					String user = keyboard.nextLine();
+					
+					User try_user = uDAO.findByUsername(user);
+					
+					if (try_user == null) {
 
-					System.out.println("Password:");
-					String password = keyboard.nextLine();
-
-					System.out.println("Email:");
-					String email = keyboard.nextLine();
-
-					User new_user = null;
-
-					try {
-						new_user = new User(user, password, email);
-						uDAO.persist(new_user);
-					} catch (Exception e) {
-						e.getMessage();
+						System.out.println("Password:");
+						String password = keyboard.nextLine();
+	
+						System.out.println("Email:");
+						String email = keyboard.nextLine();
+	
+						User new_user = null;
+						
+	
+						try {
+							new_user = new User(user, password, email);
+							uDAO.persist(new_user);
+						} catch (Exception e) {
+							e.getMessage();
+						}
+	
+						System.out.println("Registered successfully " + new_user.getUsername());
+						current_user = new_user;
+	
+						em.getTransaction().commit();
+					} else {
+						System.out.println("User " + user + " already exists");
 					}
-
-					System.out.println("Registered successfully " + new_user.getUsername());
-					current_user = new_user;
-
-					em.getTransaction().commit();
 	        		
 	            } else if ("2".equals(input)) {
 
