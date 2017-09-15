@@ -291,6 +291,7 @@ public class Application {
 						current_user = new_user;
 	
 						em.getTransaction().commit();
+						em.getTransaction().begin();
 					} else {
 						System.out.println("User " + user + " already exists");
 					}
@@ -437,6 +438,7 @@ public class Application {
 
 					System.out.println("Saved.");
 					em.getTransaction().commit();
+					em.getTransaction().begin();
 	            	
 	            } else if ("5".equals(input)) {
 	            	boolean can_edit = true;
@@ -551,6 +553,7 @@ public class Application {
     								uDAO.persist(share_with_user);
     								nDAO.persist(note_retrieval);
 			           				em.getTransaction().commit();
+			           				em.getTransaction().begin();
 		           				}
 		            			
 	           					
