@@ -186,7 +186,6 @@ public class Application {
 					try {
 						new_textnote = new TextNote(current_user, title, text);
 						nDAO.persist(new_textnote);
-						current_user.addAuthorNote(new_textnote);
 					} catch (Exception e) {
 						e.getMessage();
 					}
