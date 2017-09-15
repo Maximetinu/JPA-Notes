@@ -296,7 +296,7 @@ public class Application {
 					}
 	        		
 	            } else if ("2".equals(input)) {
-
+	            	
 					System.out.println("Name:");
 					String user = keyboard.nextLine();
 
@@ -310,11 +310,9 @@ public class Application {
 							current_user = try_user;
 						} else {
 							System.out.println("Wrong password");
-							stop = true;
 						}
 					} else {
 						System.out.println("Wrong user");
-						stop = true;
 					}
 
 				} else if ("3".equals(input)) {

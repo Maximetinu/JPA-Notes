@@ -17,7 +17,11 @@ public class TagDAO extends BaseDAO<Tag> {
 		Tag result = null;
 		
 		Query query  =   context.createQuery("select t from Tag t where t.tag_text=:tag").setParameter("tag", tag_text);
-		result = (Tag) query.getResultList().get(0);
+		
+
+		if (!query.getResultList().isEmpty()) {
+			result = (Tag) query.getResultList().get(0);
+		}
 		
 		return result;
 		

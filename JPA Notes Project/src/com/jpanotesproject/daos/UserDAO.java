@@ -21,7 +21,10 @@ public class UserDAO  extends BaseDAO<User>{
 		User result = null;
 		
 		Query query  =   context.createQuery("select u from User u where u.username=:usr").setParameter("usr", username);
-		result = (User) query.getResultList().get(0);
+		
+		if (!query.getResultList().isEmpty()) {
+			result = (User) query.getResultList().get(0);
+		}
 		
 		return result;
 		
