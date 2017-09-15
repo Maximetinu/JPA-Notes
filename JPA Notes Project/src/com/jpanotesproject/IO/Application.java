@@ -563,7 +563,7 @@ public class Application {
 	            	
 	            } else if ("6".equals(input)) {
 	            	
-	            	stop = true;
+	            	current_user = null;
 	            	
 	            }
 
