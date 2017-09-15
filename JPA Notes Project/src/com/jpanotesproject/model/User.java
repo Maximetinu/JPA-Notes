@@ -1,9 +1,9 @@
 package com.jpanotesproject.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -40,7 +40,7 @@ public class User extends BaseEntity {
 	@OneToMany
 	@JoinTable(name = "User_Has_Notes", joinColumns = { @JoinColumn(name = "author_name", referencedColumnName = "username") }, inverseJoinColumns = {
 			@JoinColumn(name = "note_id", referencedColumnName = "id") })
-	private List<Note> ownNotes;
+	private Set<Note> ownNotes;
 
 	public User(String name, String password, String email) {
 		super();
@@ -52,7 +52,7 @@ public class User extends BaseEntity {
 		this.registrationDate = new java.sql.Timestamp(now);
 
 		sharedNotes = new HashMap<Note, Integer>();
-		ownNotes = new ArrayList<Note>();
+		ownNotes = new HashSet<Note>();
 	}
 
 	public User() {
@@ -105,7 +105,7 @@ public class User extends BaseEntity {
 		return registrationDate;
 	}
 
-	public List<Note> getOwnNotes() {
+	public Set<Note> getOwnNotes() {
 		return ownNotes;
 	}
 
