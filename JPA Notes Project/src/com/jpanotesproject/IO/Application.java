@@ -197,7 +197,7 @@ public class Application {
 						System.out.println("Insert 0 to stop ");
 			            String new_tag_str = keyboard.nextLine();
 			            
-			            if (!new_tag_str.equals("0")) {
+			            if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
 			            	
 			            	Tag new_tag = null;
 			            	
@@ -206,9 +206,11 @@ public class Application {
 								if (new_tag == null) {
 									new_tag = new Tag(new_tag_str);
 									tDAO.persist(new_tag);
+									/**/System.out.println(" CREAD TAG");
 								}
 								new_textnote.addTag(new_tag);
 							} catch (Exception e) {
+								System.out.println("Error inserting tag " + new_tag_str);
 								e.getMessage();
 							}
 							System.out.println(new_tag_str + " added.");
