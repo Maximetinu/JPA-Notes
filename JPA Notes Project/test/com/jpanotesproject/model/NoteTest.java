@@ -2,9 +2,7 @@ package com.jpanotesproject.model;
 
 import java.lang.reflect.Modifier;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -12,15 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.MapKeyJoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jpanotesproject.testing.AssertAnnotations;
-import com.jpanotesproject.testing.ReflectTool;
+import com.jpanotesproject.helpers.AssertAnnotations;
+import com.jpanotesproject.helpers.ReflectTool;
 
 public class NoteTest {
 

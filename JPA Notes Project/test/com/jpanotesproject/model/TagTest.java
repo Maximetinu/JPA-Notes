@@ -7,8 +7,8 @@ import javax.persistence.Table;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jpanotesproject.testing.AssertAnnotations;
-import com.jpanotesproject.testing.ReflectTool;
+import com.jpanotesproject.helpers.AssertAnnotations;
+import com.jpanotesproject.helpers.ReflectTool;
 
 public class TagTest {
 
