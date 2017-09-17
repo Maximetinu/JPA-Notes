@@ -55,5 +55,11 @@ public class TagTest {
 		Assert.assertEquals(true, c.unique());
 		Assert.assertEquals(255, c.length());
 	}
+	
+
+	@Test
+	public void baseEntityInheritance() {
+		Assert.assertEquals(BaseEntity.class, Tag.class.getSuperclass());
+	}
 
 }

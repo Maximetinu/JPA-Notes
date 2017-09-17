@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public /* abstract */ class Note extends BaseEntity {
+public abstract class Note extends BaseEntity {
 
 	@Column(name = "title", length = 255)
 	private String title;
@@ -23,7 +23,7 @@ public /* abstract */ class Note extends BaseEntity {
 	private java.sql.Timestamp creationDate;
 
 	@Column(name = "last_edit_date")
-	private java.sql.Timestamp lastEditDate;;
+	private java.sql.Timestamp lastEditDate;
 
 	@ManyToOne
 	@JoinColumn(name = "author", referencedColumnName = "username") // Optional, but we want reference by Username instead of id. More visual.
