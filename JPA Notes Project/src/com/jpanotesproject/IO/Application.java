@@ -83,23 +83,44 @@ public class Application {
 	        		
 	            } else if ("2".equals(input)) {
 	            	
-					System.out.println("Name:");
-					String user = keyboard.nextLine();
-
-					System.out.println("Password:");
-					String password = keyboard.nextLine();
-
-					User try_user = uDAO.findByUsername(user);
-
-					if (try_user.getUsername() != null && try_user.getUsername() != "") {
-						if (try_user.getPassword().equals(password)) {
-							current_user = try_user;
+	            	boolean repeat_user = true;
+	            	boolean repeat_password = true;
+	            	
+	            	int tried = 0;
+	            	
+	            	while (repeat_user && tried<3) {
+						System.out.println("Name:");
+						String user = keyboard.nextLine();
+	
+						User try_user = uDAO.findByUsername(user);
+	
+						if (try_user != null && try_user.getUsername() != "") {
+							tried = 0;
+							repeat_user = false;
+							while (repeat_password && tried<3) {
+								System.out.println("Password:");
+								String password = keyboard.nextLine();
+								if (try_user.getPassword().equals(password)) {
+									current_user = try_user;
+									repeat_password = false;
+								} else {
+									System.out.println("Wrong password");
+									tried++;
+								}
+							}
+							
+							
 						} else {
-							System.out.println("Wrong password");
+							System.out.println("Wrong user");
+							tried++;
 						}
-					} else {
-						System.out.println("Wrong user");
-					}
+						
+						if (tried >= 3) {
+							System.out.println("Limit of attempts exceeded");
+							stop = true;
+						}
+						
+	            	}
 
 				} else if ("3".equals(input)) {
 
@@ -182,14 +203,14 @@ public class Application {
 					
 					TextNote new_textnote = null;
 
-					em.getTransaction().begin();
+					em.getTransaction().begin();/**/
 					try {
 						new_textnote = new TextNote(current_user, title, text);
 						nDAO.persist(new_textnote);
 					} catch (Exception e) {
 						e.getMessage();
 					}
-					
+					em.getTransaction().commit();/**/
 
 					System.out.println("Add tags to " + title);
 					boolean stop_add_tags = false;
@@ -198,29 +219,33 @@ public class Application {
 			            String new_tag_str = keyboard.nextLine();
 			            
 			            if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
-			            	
+
+							em.getTransaction().begin();/**/
 			            	Tag new_tag = null;
 			            	
 							try {
 								new_tag = tDAO.findByTag(new_tag_str);
+
 								if (new_tag == null) {
 									new_tag = new Tag(new_tag_str);
 									tDAO.persist(new_tag);
-									/**/System.out.println(" CREAD TAG");
 								}
 								new_textnote.addTag(new_tag);
+								em.getTransaction().commit();/**/
 							} catch (Exception e) {
 								System.out.println("Error inserting tag " + new_tag_str);
 								e.getMessage();
 							}
 							System.out.println(new_tag_str + " added.");
-			            } else {
+			            } else if (new_tag_str.equals("0")) {
 			            	stop_add_tags = true;
+			            } else {
+							System.out.println("Ignored. Try again");
 			            }
 			            
 						
 					}
-					em.getTransaction().commit();
+
 					
 
 					System.out.println("Saved.");

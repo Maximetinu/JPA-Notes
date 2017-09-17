@@ -1,11 +1,7 @@
 package com.jpanotesproject.daos;
 
-import java.util.List;
-
 import javax.persistence.Query;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-
 import com.jpanotesproject.model.User;
 
 public class UserDAO  extends BaseDAO<User>{
