@@ -19,6 +19,11 @@ import com.jpanotesproject.helpers.ReflectTool;
 public class UserTest {
 
 	@Test
+	public void baseEntityInheritance() {
+		Assert.assertEquals(BaseEntity.class, User.class.getSuperclass());
+	}
+
+	@Test
 	public void typeAnnotations() {
 		AssertAnnotations.assertType(User.class, Entity.class, Table.class);
 	}
