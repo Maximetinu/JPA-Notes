@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 
 import org.junit.Test;
 
-import com.jpanotesproject.testing.AssertAnnotations;
+import com.jpanotesproject.helpers.AssertAnnotations;
 
 public class BaseEntityTest {
 
