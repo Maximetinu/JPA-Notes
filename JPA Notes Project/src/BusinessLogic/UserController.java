@@ -59,6 +59,11 @@ public class UserController {
 		return result;
 	}
 	
+
+
+	public boolean Exist(String username) {
+		return uDAO.findByUsername(username) != null;
+	}
 	
 	
 	

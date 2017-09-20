@@ -30,13 +30,6 @@ public class Application {
 
 	public static void main(String[] args) {
 
-		EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JPA Notes Project");
-		EntityManager em = emfactory.createEntityManager();
-
-		UserDAO uDAO = new UserDAO(em);
-		NoteDAO nDAO = new NoteDAO(em);
-		TagDAO tDAO = new TagDAO(em);
-
 		Scanner keyboard = new Scanner(System.in);
 		boolean stop = false;
 		User current_user = null;
@@ -56,9 +49,9 @@ public class Application {
 					System.out.println("Name:");
 					String user = keyboard.nextLine();
 					
-					User try_user = uDAO.findByUsername(user);
+					User try_user = null;
 					
-					if (try_user == null) {
+					if (!UserController.getInstance().Exist(user)) {
 
 						System.out.println("Password:");
 						String password = keyboard.nextLine();
@@ -244,7 +237,7 @@ public class Application {
 		            	for (Note note : current_user.getSharedNotes().keySet()) {
 		            		if (note.getTitle().equals(title_note)) {
 		            			note_retrieval = note;
-								nDAO.persist(note_retrieval);
+								NoteController.getInstance().Editable(note_retrieval);
 		            		}
 		        		}
 		            	
@@ -269,7 +262,6 @@ public class Application {
 	           				
 	           				if ("1".equals(input)) {
 	           					boolean stop_add_tags = false;
-	        					em.getTransaction().begin();
 	    						while (!stop_add_tags) {
 	    							System.out.println("Insert 0 to stop ");
 	    				            String new_tag_str = keyboard.nextLine();
@@ -345,8 +337,6 @@ public class Application {
 			
 		}
 
-		em.close();
-		emfactory.close();
 	}
 
 }

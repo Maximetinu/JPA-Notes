@@ -98,5 +98,9 @@ public class NoteController {
 		return result;
 	}
 	
+	public void Editable(Note note) {
+		nDAO.persist(note);
+	}
+	
 
 }
