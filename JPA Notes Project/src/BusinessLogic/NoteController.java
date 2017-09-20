@@ -6,6 +6,7 @@ import javax.persistence.Persistence;
 
 import com.jpanotesproject.daos.NoteDAO;
 import com.jpanotesproject.daos.TagDAO;
+import com.jpanotesproject.model.Note;
 import com.jpanotesproject.model.Tag;
 import com.jpanotesproject.model.TextNote;
 import com.jpanotesproject.model.User;
@@ -63,4 +64,39 @@ public class NoteController {
 		return result;
 	}
 	
+	public boolean EditTextNote(TextNote note, String new_content) {
+		boolean result = false;
+
+		em.getTransaction().begin();/**/
+    	
+		try {
+			note.setText(new_content);
+			result = true;
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		em.getTransaction().commit();/**/
+		return result;
+	}
+	
+	public boolean ShareNote(Note note, User user) {
+		boolean result = false;
+
+		em.getTransaction().begin();/**/
+    	
+		try {
+			note.shareWith(user);
+			result = true;
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		em.getTransaction().commit();/**/
+		
+		
+		return result;
+	}
+	
+
 }

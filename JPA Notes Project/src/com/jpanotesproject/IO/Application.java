@@ -18,6 +18,7 @@ import com.jpanotesproject.model.User;
 
 import BusinessLogic.LoginController;
 import BusinessLogic.NoteController;
+import BusinessLogic.UserController;
 
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)
@@ -205,8 +206,6 @@ public class Application {
 				            String new_tag_str = keyboard.nextLine();
 				            
 				            if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
-	
-				            	
 								try {
 									NoteController.getInstance().AddTagToTextNote(new_textnote, new_tag_str);
 									System.out.println(new_tag_str + " added.");
@@ -220,9 +219,7 @@ public class Application {
 								System.out.println("Ignored. Try again");
 				            }
 				            
-							
 						}
-	
 						
 						System.out.println("Saved.");
 					} else {
@@ -273,62 +270,42 @@ public class Application {
 	           				if ("1".equals(input)) {
 	           					boolean stop_add_tags = false;
 	        					em.getTransaction().begin();
-	        					while (!stop_add_tags) {
-	        						System.out.println("Insert 0 to stop ");
-	        			            String new_tag_str = keyboard.nextLine();
-	        			            
-	        			            if (!new_tag_str.equals("0")) {
-
-	        			            	Tag new_tag = null;
-	        			            	
-	        							try {
-	        								new_tag = tDAO.findByTag(new_tag_str);
-	        								if (new_tag == null) {
-	        									new_tag = new Tag(new_tag_str);
-	        									tDAO.persist(new_tag);
-	        								}
-	        								note_retrieval.addTag(new_tag);
-	        							} catch (Exception e) {
-	        								e.getMessage();
-	        							}
-	        							
-	        							System.out.println(new_tag_str + " added.");
-	        			            } else {
-	        			            	stop_add_tags = true;
-	        			            }
-	        					}
-	        					em.getTransaction().commit();
+	    						while (!stop_add_tags) {
+	    							System.out.println("Insert 0 to stop ");
+	    				            String new_tag_str = keyboard.nextLine();
+	    				            
+	    				            if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
+	    								try {
+	    									NoteController.getInstance().AddTagToTextNote((TextNote)note_retrieval, new_tag_str);
+	    									System.out.println(new_tag_str + " added.");
+	    								} catch (Exception e) {
+	    									System.out.println("Error inserting tag " + new_tag_str);
+	    									e.getMessage();
+	    								}
+	    				            } else if (new_tag_str.equals("0")) {
+	    				            	stop_add_tags = true;
+	    				            } else {
+	    								System.out.println("Ignored. Try again");
+	    				            }
+	    				            
+	    						}
 
         						
 	           				} else if  ("2".equals(input)) {
 		           				String new_content = keyboard.nextLine();
-		    					em.getTransaction().begin();
-		           				try {
-    								((TextNote)note_retrieval).setText(new_content);
-    								
-    							} catch (Exception e) {
-    								e.getMessage();
-    							}
-		    					em.getTransaction().commit();
+		           				NoteController.getInstance().EditTextNote((TextNote)note_retrieval, new_content);
 	        						
 	           				} else if  ("3".equals(input)) {
 		            			System.out.println("Share " + note_retrieval.getTitle() + " with: ");
 		           				String share_with_user_str = keyboard.nextLine();
 		           				
-		           				User share_with_user = null;
-		           				try {
-    								share_with_user = uDAO.findByUsername(share_with_user_str);
-    								uDAO.persist(share_with_user);
-    								
-    							} catch (Exception e) {
-    								e.getMessage();
-    							}
+		           				User share_with_user = UserController.getInstance().getUser(share_with_user_str);
 		           				
 		           				if (share_with_user == null || share_with_user.getUsername().equals(current_user.getUsername())) {
 			            			System.out.println("Impossible share with " + share_with_user_str);
 		           				} else {
-		        					em.getTransaction().begin();
-		           					note_retrieval.shareWith(share_with_user);
+
+		        					NoteController.getInstance().ShareNote(note_retrieval, share_with_user);
 
 		           					boolean repeat = true;
 			           				while (repeat) {
@@ -337,15 +314,14 @@ public class Application {
 
 			           					
 				           				if (can_w.equals("y") || can_w.equals("yes")) {
-				           					share_with_user.shareNote(note_retrieval, 2);
+				           					UserController.getInstance().ShareNote(note_retrieval, share_with_user, 2);
 				           					repeat = false;
 				           				} else if (can_w.equals("n") || can_w.equals("no")) {
-				           					share_with_user.shareNote(note_retrieval, 1);
+				           					UserController.getInstance().ShareNote(note_retrieval, share_with_user, 1);
 				           					repeat = false;
 				           				} 
 		           					}
 
-			           				em.getTransaction().commit();
 		           				}
 		            			
 	           					
