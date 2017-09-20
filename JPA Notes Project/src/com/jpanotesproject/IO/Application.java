@@ -16,6 +16,8 @@ import com.jpanotesproject.model.Tag;
 import com.jpanotesproject.model.TextNote;
 import com.jpanotesproject.model.User;
 
+import BusinessLogic.LoginController;
+
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)
  * Here services will be used, without creating dependencies with DAOs nor Model/Entities
@@ -62,20 +64,15 @@ public class Application {
 						System.out.println("Email:");
 						String email = keyboard.nextLine();
 	
-						User new_user = null;
-						
-
-						em.getTransaction().begin();
-						try {
-							new_user = new User(user, password, email);
-							uDAO.persist(new_user);
-						} catch (Exception e) {
-							e.getMessage();
-						}
-						em.getTransaction().commit();
+						User new_user = LoginController.getInstance().register(user, password, email);
 	
-						System.out.println("Registered successfully " + new_user.getUsername());
-						current_user = new_user;
+						if (new_user != null) {
+							System.out.println("Registered successfully " + new_user.getUsername());
+							current_user = new_user;
+						} else {
+							System.out.println("Error ocurred");
+							stop = true;
+						}
 	
 					} else {
 						System.out.println("User " + user + " already exists");
@@ -83,28 +80,25 @@ public class Application {
 	        		
 	            } else if ("2".equals(input)) {
 	            	
-	            	boolean repeat_user = true;
-	            	boolean repeat_password = true;
+	            	boolean repeat = true;
 	            	
 	            	int tried = 0;
 	            	
-	            	while (repeat_user && tried<3) {
 						System.out.println("Name:");
 						String user = keyboard.nextLine();
 	
-						User try_user = uDAO.findByUsername(user);
-	
-						if (try_user != null && try_user.getUsername() != "") {
-							tried = 0;
-							repeat_user = false;
-							while (repeat_password && tried<3) {
+						if (user != "") {
+
+							while (repeat && tried<3) {
 								System.out.println("Password:");
 								String password = keyboard.nextLine();
-								if (try_user.getPassword().equals(password)) {
-									current_user = try_user;
-									repeat_password = false;
+								
+								current_user = LoginController.getInstance().login(user, password);
+								
+								if (current_user != null) {
+									repeat = false;
 								} else {
-									System.out.println("Wrong password");
+									System.out.println("Wrong user");
 									tried++;
 								}
 							}
@@ -120,7 +114,6 @@ public class Application {
 							stop = true;
 						}
 						
-	            	}
 
 				} else if ("3".equals(input)) {
 
