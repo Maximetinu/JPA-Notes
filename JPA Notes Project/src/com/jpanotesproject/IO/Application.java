@@ -17,6 +17,7 @@ import com.jpanotesproject.model.TextNote;
 import com.jpanotesproject.model.User;
 
 import BusinessLogic.LoginController;
+import BusinessLogic.NoteController;
 
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)
@@ -194,54 +195,39 @@ public class Application {
 					System.out.println("Text:");
 					String text = keyboard.nextLine();
 					
-					TextNote new_textnote = null;
-
-					em.getTransaction().begin();/**/
-					try {
-						new_textnote = new TextNote(current_user, title, text);
-						nDAO.persist(new_textnote);
-					} catch (Exception e) {
-						e.getMessage();
-					}
-					em.getTransaction().commit();/**/
-
-					System.out.println("Add tags to " + title);
-					boolean stop_add_tags = false;
-					while (!stop_add_tags) {
-						System.out.println("Insert 0 to stop ");
-			            String new_tag_str = keyboard.nextLine();
-			            
-			            if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
-
-							em.getTransaction().begin();/**/
-			            	Tag new_tag = null;
-			            	
-							try {
-								new_tag = tDAO.findByTag(new_tag_str);
-
-								if (new_tag == null) {
-									new_tag = new Tag(new_tag_str);
-									tDAO.persist(new_tag);
-								}
-								new_textnote.addTag(new_tag);
-								em.getTransaction().commit();/**/
-							} catch (Exception e) {
-								System.out.println("Error inserting tag " + new_tag_str);
-								e.getMessage();
-							}
-							System.out.println(new_tag_str + " added.");
-			            } else if (new_tag_str.equals("0")) {
-			            	stop_add_tags = true;
-			            } else {
-							System.out.println("Ignored. Try again");
-			            }
-			            
-						
-					}
-
+					TextNote new_textnote = NoteController.getInstance().NewTextNote(current_user, title, text);
 					
-
-					System.out.println("Saved.");
+					if (new_textnote != null) {
+						System.out.println("Add tags to " + title);
+						boolean stop_add_tags = false;
+						while (!stop_add_tags) {
+							System.out.println("Insert 0 to stop ");
+				            String new_tag_str = keyboard.nextLine();
+				            
+				            if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
+	
+				            	
+								try {
+									NoteController.getInstance().AddTagToTextNote(new_textnote, new_tag_str);
+									System.out.println(new_tag_str + " added.");
+								} catch (Exception e) {
+									System.out.println("Error inserting tag " + new_tag_str);
+									e.getMessage();
+								}
+				            } else if (new_tag_str.equals("0")) {
+				            	stop_add_tags = true;
+				            } else {
+								System.out.println("Ignored. Try again");
+				            }
+				            
+							
+						}
+	
+						
+						System.out.println("Saved.");
+					} else {
+						System.out.println("An error ocurred");
+					}
 	            	
 	            } else if ("5".equals(input)) {
 	            	boolean can_edit = true;

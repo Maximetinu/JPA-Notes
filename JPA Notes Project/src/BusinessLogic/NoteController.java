@@ -6,7 +6,9 @@ import javax.persistence.Persistence;
 
 import com.jpanotesproject.daos.NoteDAO;
 import com.jpanotesproject.daos.TagDAO;
-import com.jpanotesproject.daos.UserDAO;
+import com.jpanotesproject.model.Tag;
+import com.jpanotesproject.model.TextNote;
+import com.jpanotesproject.model.User;
 
 public class NoteController {
 
@@ -17,7 +19,6 @@ public class NoteController {
 	private static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JPA Notes Project");
 	private static EntityManager em = emfactory.createEntityManager();
 	private static NoteDAO nDAO  = new NoteDAO(em);
-	private static TagDAO tDAO  = new TagDAO(em);
 	
 	private NoteController() {
 	}
@@ -27,6 +28,39 @@ public class NoteController {
 			instance = new NoteController();
 		}
 		return instance;
+	}
+	
+	public TextNote NewTextNote(User author, String title, String text) {
+		TextNote note = null;
+
+		em.getTransaction().begin();
+		try {
+			note = new TextNote(author, title, text);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		em.getTransaction().commit();
+		
+		return note;
+	}
+	
+	public boolean AddTagToTextNote(TextNote note, String tag_str) {
+		boolean result = false;
+		
+		Tag tag = TagController.getInstance().getTagForce(tag_str);
+
+		em.getTransaction().begin();/**/
+    	
+		try {
+			note.addTag(tag);
+			result = true;
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		
+		em.getTransaction().commit();/**/
+		
+		return result;
 	}
 	
 }
