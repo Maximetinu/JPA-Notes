@@ -1,16 +1,7 @@
 package com.jpanotesproject.IO;
 
-import java.util.List;
 import java.util.Scanner;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import com.jpanotesproject.daos.NoteDAO;
-import com.jpanotesproject.daos.TagDAO;
-import com.jpanotesproject.daos.UserDAO;
-import com.jpanotesproject.model.AudioNote;
 import com.jpanotesproject.model.Note;
 import com.jpanotesproject.model.Tag;
 import com.jpanotesproject.model.TextNote;
