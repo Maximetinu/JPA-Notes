@@ -1,4 +1,4 @@
-package com.jpanotesproject.model;
+package com.jpanotesproject.tests.model;
 
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
@@ -13,8 +13,10 @@ import javax.persistence.Table;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.jpanotesproject.helpers.AssertAnnotations;
-import com.jpanotesproject.helpers.ReflectTool;
+import com.jpanotesproject.model.BaseEntity;
+import com.jpanotesproject.model.User;
+import com.jpanotesproject.tests.helpers.AssertAnnotations;
+import com.jpanotesproject.tests.helpers.ReflectTool;
 
 public class UserTest {
 

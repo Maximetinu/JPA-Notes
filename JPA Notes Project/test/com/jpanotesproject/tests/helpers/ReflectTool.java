@@ -1,4 +1,4 @@
-package com.jpanotesproject.helpers;
+package com.jpanotesproject.tests.helpers;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

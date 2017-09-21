@@ -1,4 +1,4 @@
-package com.jpanotesproject.model;
+package com.jpanotesproject.tests.model;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
