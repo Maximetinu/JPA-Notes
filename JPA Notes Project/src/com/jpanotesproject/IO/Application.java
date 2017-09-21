@@ -2,14 +2,13 @@ package com.jpanotesproject.IO;
 
 import java.util.Scanner;
 
+import com.jpanotesproject.BusinessLogic.LoginController;
+import com.jpanotesproject.BusinessLogic.NoteController;
+import com.jpanotesproject.BusinessLogic.UserController;
 import com.jpanotesproject.model.Note;
 import com.jpanotesproject.model.Tag;
 import com.jpanotesproject.model.TextNote;
 import com.jpanotesproject.model.User;
-
-import BusinessLogic.LoginController;
-import BusinessLogic.NoteController;
-import BusinessLogic.UserController;
 
 /*
  * This class is meant to be the interface of our application by managing user's input by a terminal menu (in this basic case)

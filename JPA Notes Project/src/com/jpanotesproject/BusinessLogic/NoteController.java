@@ -1,4 +1,4 @@
-package BusinessLogic;
+package com.jpanotesproject.BusinessLogic;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
