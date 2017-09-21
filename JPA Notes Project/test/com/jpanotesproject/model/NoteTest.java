@@ -1,4 +1,4 @@
-package com.jpanotesproject.tests.model;
+package com.jpanotesproject.model;
 
 import java.lang.reflect.Modifier;
 
@@ -13,10 +13,10 @@ import javax.persistence.ManyToOne;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.jpanotesproject.helpers.AssertAnnotations;
+import com.jpanotesproject.helpers.ReflectTool;
 import com.jpanotesproject.model.BaseEntity;
 import com.jpanotesproject.model.Note;
-import com.jpanotesproject.tests.helpers.AssertAnnotations;
-import com.jpanotesproject.tests.helpers.ReflectTool;
 
 public class NoteTest {
 
