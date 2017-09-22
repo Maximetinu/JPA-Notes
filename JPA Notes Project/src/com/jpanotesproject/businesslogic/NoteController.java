@@ -34,14 +34,14 @@ public class NoteController {
 
 	public static NoteController getInstance(EntityManager entityManager) {
 		if (instance == null) {
-			instance = new NoteController();
+			instance = new NoteController(entityManager);
 		}
 		if (em != entityManager)
 			em = entityManager;
 		return instance;
 	}
 
-	public TextNote NewTextNote(User author, String title, String text) {
+	public TextNote newTextNote(User author, String title, String text) {
 		TextNote note = null;
 
 		em.getTransaction().begin();
@@ -55,10 +55,10 @@ public class NoteController {
 		return note;
 	}
 
-	public boolean AddTagToTextNote(TextNote note, String tag_str) {
+	public boolean addTagToTextNote(TextNote note, String tag_str) {
 		boolean result = false;
 
-		Tag tag = TagController.getInstance().getTagForce(tag_str);
+		Tag tag = TagController.getInstance(em).getTagForce(tag_str);
 
 		em.getTransaction().begin();/**/
 
@@ -74,7 +74,7 @@ public class NoteController {
 		return result;
 	}
 
-	public boolean EditTextNote(TextNote note, String new_content) {
+	public boolean editTextNote(TextNote note, String new_content) {
 		boolean result = false;
 
 		em.getTransaction().begin();/**/
@@ -90,7 +90,7 @@ public class NoteController {
 		return result;
 	}
 
-	public boolean ShareNote(Note note, User user) {
+	public boolean shareNote(Note note, User user) {
 		boolean result = false;
 
 		em.getTransaction().begin();/**/
@@ -107,7 +107,7 @@ public class NoteController {
 		return result;
 	}
 
-	public void Editable(Note note) {
+	public void editable(Note note) {
 		nDAO.persist(note);
 	}
 

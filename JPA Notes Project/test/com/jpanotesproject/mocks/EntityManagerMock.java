@@ -33,6 +33,11 @@ public class EntityManagerMock implements EntityManager {
 	private boolean persistCalled = false;
 	private boolean removeCalled = false;
 	private boolean createQueryCalled = false;
+	private boolean getTransactionCalled = false;
+
+	public boolean isGetTransactionCalled() {
+		return getTransactionCalled;
+	}
 
 	public boolean isFindCalled() {
 		return findCalled;
@@ -60,6 +65,7 @@ public class EntityManagerMock implements EntityManager {
 		persistCalled = false;
 		removeCalled = false;
 		createQueryCalled = false;
+		getTransactionCalled = false;
 	}
 
 	public EntityManagerMock() {
@@ -278,8 +284,8 @@ public class EntityManagerMock implements EntityManager {
 
 	@Override
 	public EntityTransaction getTransaction() {
-		// TODO Auto-generated method stub
-		return null;
+		getTransactionCalled = true;
+		return new EntityTransactionMock();
 	}
 
 	@Override

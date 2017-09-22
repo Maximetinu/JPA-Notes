@@ -17,6 +17,11 @@ public class TagController {
 		tDAO = new TagDAO(em);
 	}
 
+	private TagController(EntityManager entityManager) {
+		em = entityManager;
+		tDAO = new TagDAO(em);
+	}
+
 	public static TagController getInstance() {
 		if (instance == null) {
 			instance = new TagController();
@@ -26,7 +31,7 @@ public class TagController {
 
 	public static TagController getInstance(EntityManager entityManager) {
 		if (instance == null) {
-			instance = new TagController();
+			instance = new TagController(entityManager);
 		}
 		if (em != entityManager)
 			em = entityManager;

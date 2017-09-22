@@ -38,7 +38,7 @@ public class Application {
 					System.out.println("Name:");
 					String user = keyboard.nextLine();
 
-					if (!UserController.getInstance().Exist(user)) {
+					if (!UserController.getInstance().exist(user)) {
 
 						System.out.println("Password:");
 						String password = keyboard.nextLine();
@@ -170,7 +170,7 @@ public class Application {
 					System.out.println("Text:");
 					String text = keyboard.nextLine();
 
-					TextNote new_textnote = NoteController.getInstance().NewTextNote(current_user, title, text);
+					TextNote new_textnote = NoteController.getInstance().newTextNote(current_user, title, text);
 
 					if (new_textnote != null) {
 						System.out.println("Add tags to " + title);
@@ -181,7 +181,7 @@ public class Application {
 
 							if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
 								try {
-									NoteController.getInstance().AddTagToTextNote(new_textnote, new_tag_str);
+									NoteController.getInstance().addTagToTextNote(new_textnote, new_tag_str);
 									System.out.println(new_tag_str + " added.");
 								} catch (Exception e) {
 									System.out.println("Error inserting tag " + new_tag_str);
@@ -218,7 +218,7 @@ public class Application {
 						for (Note note : current_user.getSharedNotes().keySet()) {
 							if (note.getTitle().equals(title_note)) {
 								note_retrieval = note;
-								NoteController.getInstance().Editable(note_retrieval);
+								NoteController.getInstance().editable(note_retrieval);
 							}
 						}
 
@@ -249,7 +249,7 @@ public class Application {
 
 									if (!new_tag_str.equals("0") && new_tag_str != "" && new_tag_str != null) {
 										try {
-											NoteController.getInstance().AddTagToTextNote((TextNote) note_retrieval, new_tag_str);
+											NoteController.getInstance().addTagToTextNote((TextNote) note_retrieval, new_tag_str);
 											System.out.println(new_tag_str + " added.");
 										} catch (Exception e) {
 											System.out.println("Error inserting tag " + new_tag_str);
@@ -265,7 +265,7 @@ public class Application {
 
 							} else if ("2".equals(input)) {
 								String new_content = keyboard.nextLine();
-								NoteController.getInstance().EditTextNote((TextNote) note_retrieval, new_content);
+								NoteController.getInstance().editTextNote((TextNote) note_retrieval, new_content);
 
 							} else if ("3".equals(input)) {
 								System.out.println("Share " + note_retrieval.getTitle() + " with: ");
@@ -277,7 +277,7 @@ public class Application {
 									System.out.println("Impossible share with " + share_with_user_str);
 								} else {
 
-									NoteController.getInstance().ShareNote(note_retrieval, share_with_user);
+									NoteController.getInstance().shareNote(note_retrieval, share_with_user);
 
 									boolean repeat = true;
 									while (repeat) {
@@ -285,10 +285,10 @@ public class Application {
 										String can_w = keyboard.nextLine();
 
 										if (can_w.equals("y") || can_w.equals("yes")) {
-											UserController.getInstance().ShareNote(note_retrieval, share_with_user, 2);
+											UserController.getInstance().shareNote(note_retrieval, share_with_user, 2);
 											repeat = false;
 										} else if (can_w.equals("n") || can_w.equals("no")) {
-											UserController.getInstance().ShareNote(note_retrieval, share_with_user, 1);
+											UserController.getInstance().shareNote(note_retrieval, share_with_user, 1);
 											repeat = false;
 										}
 									}

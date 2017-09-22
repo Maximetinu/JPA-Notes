@@ -32,7 +32,7 @@ public class UserController {
 
 	public static UserController getInstance(EntityManager entityManager) {
 		if (instance == null) {
-			instance = new UserController();
+			instance = new UserController(entityManager);
 		}
 		if (em != entityManager)
 			em = entityManager;
@@ -52,7 +52,7 @@ public class UserController {
 		return result;
 	}
 
-	public boolean ShareNote(Note note, User user, int permissions) {
+	public boolean shareNote(Note note, User user, int permissions) {
 		boolean result = false;
 
 		em.getTransaction().begin();/**/
@@ -68,7 +68,7 @@ public class UserController {
 		return result;
 	}
 
-	public boolean Exist(String username) {
+	public boolean exist(String username) {
 		return uDAO.findByUsername(username) != null;
 	}
 
