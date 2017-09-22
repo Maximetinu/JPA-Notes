@@ -17,8 +17,10 @@ Starting from the basis of "An User can take a Note and label it with some Tags"
 ### License
 Non-Profit Open Software License version 3.0 (NPOSL-3.0) https://opensource.org/licenses/NPOSL-3.0
 
-### Class Diagram
+### Architecture Diagram
+![Class diagram](https://github.com/Maximetinu/JPA-Notes/blob/master/Diagrams/JPAArchitecture.png?raw=true)
 
+### Class Diagram
 ![Class diagram](https://raw.githubusercontent.com/Maximetinu/JPA-Notes/master/JPA%20Notes%20Project/Diagrams/Class%20Diagram1.jpg)
 
 
