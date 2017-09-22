@@ -11,8 +11,8 @@ The application will be similar to Google Keep, although obviously simpler, and 
 
 
 ### Authors
-- [Javier Izquierdo Vera](https://github.com/Lifka/) - [javierizquierdovera@gmail.com](mailto:javierizquierdovera@gmail.com)
-- [Miguel Medina Ballesteros](https://github.com/Maximetinu/) - [maximetinu@gmail.com](mailto:maximetinu@gmail.com)
+- [Javier Izquierdo Vera (Lifka)](https://github.com/Lifka/) - [javierizquierdovera@gmail.com](mailto:javierizquierdovera@gmail.com)
+- [Miguel Medina Ballesteros (Maximetinu)](https://github.com/Maximetinu/) - [maximetinu@gmail.com](mailto:maximetinu@gmail.com)
 
 
 ### License
