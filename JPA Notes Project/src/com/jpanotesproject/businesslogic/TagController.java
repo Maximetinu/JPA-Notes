@@ -1,40 +1,46 @@
-package com.jpanotesproject.BusinessLogic;
+package com.jpanotesproject.businesslogic;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 import com.jpanotesproject.daos.TagDAO;
-import com.jpanotesproject.daos.UserDAO;
 import com.jpanotesproject.model.Tag;
 
 public class TagController {
 
-	
 	private static TagController instance = null;
 
+	private static EntityManager em;
+	private static TagDAO tDAO;
 
-	private static EntityManager em = EntityManagerController.getEntityManager();
-	private static TagDAO tDAO  = new TagDAO(em);;
-	
 	private TagController() {
+		em = EntityManagerController.getEntityManager();
+		tDAO = new TagDAO(em);
 	}
-	
+
 	public static TagController getInstance() {
 		if (instance == null) {
 			instance = new TagController();
 		}
 		return instance;
 	}
-	
+
+	public static TagController getInstance(EntityManager entityManager) {
+		if (instance == null) {
+			instance = new TagController();
+		}
+		if (em != entityManager)
+			em = entityManager;
+		return instance;
+	}
+
 	public boolean exist(String tag_str) {
 		return tDAO.findByTag(tag_str) != null;
 	}
-	
+
 	public Tag getTag(String tag_str) {
 		return tDAO.findByTag(tag_str);
 	}
-	
+
 	public Tag registerNewTag(String tag) {
 		Tag result = null;
 
@@ -47,7 +53,7 @@ public class TagController {
 			e.getMessage();
 		}
 		em.getTransaction().commit();
-		
+
 		return result;
 	}
 
@@ -59,8 +65,8 @@ public class TagController {
 		} else {
 			tag = getTag(tag_str);
 		}
-		
+
 		return tag;
 	}
-	
+
 }
