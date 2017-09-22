@@ -17,7 +17,41 @@ import com.jpanotesproject.helpers.ReflectTool;
 
 public class BaseEntityTest {
 
-	// Test que, usando reflección, pruebe que es abstract (Igual con Note)
+	class ConcreteEntity extends BaseEntity {
+		public ConcreteEntity() {
+			super();
+		}
+
+		public ConcreteEntity(long id) {
+			super();
+			super.id = id;
+		}
+	}
+
+	@Test
+	public void testEquals() {
+		ConcreteEntity testEntity = new ConcreteEntity();
+		ConcreteEntity testEntity2 = new ConcreteEntity();
+		Assert.assertEquals(testEntity, testEntity2);
+		Assert.assertEquals(testEntity, testEntity); // reflexive equals test
+		Assert.assertNotEquals(testEntity, null);
+	}
+
+	@Test
+	public void testENotquals() {
+		Assert.assertNotEquals(new ConcreteEntity(4), new ConcreteEntity(888));
+	}
+
+	@Test
+	public void testHashCode() {
+		Assert.assertEquals(new ConcreteEntity(4).hashCode(), new ConcreteEntity(4).hashCode());
+		Assert.assertNotEquals(new ConcreteEntity(4).hashCode(), new ConcreteEntity(999).hashCode());
+
+		// test that hashCode is ID more explicitly
+		long expected = 999;
+		ConcreteEntity en = new ConcreteEntity(expected);
+		Assert.assertEquals(expected, en.hashCode());
+	}
 
 	@Test
 	public void abstractClass() {

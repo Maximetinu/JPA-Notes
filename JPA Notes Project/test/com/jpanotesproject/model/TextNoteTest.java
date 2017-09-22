@@ -9,6 +9,8 @@ import org.junit.Test;
 
 import com.jpanotesproject.helpers.AssertAnnotations;
 import com.jpanotesproject.helpers.ReflectTool;
+import com.jpanotesproject.model.Note;
+import com.jpanotesproject.model.TextNote;
 
 public class TextNoteTest {
 

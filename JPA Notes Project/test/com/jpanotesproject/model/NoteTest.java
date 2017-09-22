@@ -15,6 +15,8 @@ import org.junit.Test;
 
 import com.jpanotesproject.helpers.AssertAnnotations;
 import com.jpanotesproject.helpers.ReflectTool;
+import com.jpanotesproject.model.BaseEntity;
+import com.jpanotesproject.model.Note;
 
 public class NoteTest {
 
