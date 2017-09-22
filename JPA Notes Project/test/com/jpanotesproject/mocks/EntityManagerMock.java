@@ -134,7 +134,8 @@ public class EntityManagerMock implements EntityManager {
 	@Override
 	public Query createQuery(String arg0) {
 		createQueryCalled = true;
-		return null;
+		Query q = new QueryMock();
+		return q;
 	}
 
 	@Override
