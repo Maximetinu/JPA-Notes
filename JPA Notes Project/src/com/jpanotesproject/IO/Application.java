@@ -66,12 +66,11 @@ public class Application {
 
 					int tried = 0;
 
-					System.out.println("Name:");
-					String user = keyboard.nextLine();
-
-					if (user != "") {
 
 						while (repeat && tried < 3) {
+
+							System.out.println("Name:");
+							String user = keyboard.nextLine();
 							System.out.println("Password:");
 							String password = keyboard.nextLine();
 
@@ -83,17 +82,12 @@ public class Application {
 								System.out.println("Wrong user");
 								tried++;
 							}
+		
+							if (tried >= 3) {
+								System.out.println("Limit of attempts exceeded");
+								stop = true;
+							}
 						}
-
-					} else {
-						System.out.println("Wrong user");
-						tried++;
-					}
-
-					if (tried >= 3) {
-						System.out.println("Limit of attempts exceeded");
-						stop = true;
-					}
 
 				} else if ("3".equals(input)) {
 

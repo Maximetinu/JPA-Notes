@@ -1,7 +1,10 @@
 package com.jpanotesproject.businesslogic;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
+import com.jpanotesproject.daos.NoteDAO;
 import com.jpanotesproject.daos.TagDAO;
 import com.jpanotesproject.model.Tag;
 
@@ -9,7 +12,7 @@ public class TagController {
 
 	private static TagController instance = null;
 
-	private static EntityManager em;
+	private static EntityManager em = null;
 	private static TagDAO tDAO;
 
 	private TagController() {

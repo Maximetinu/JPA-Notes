@@ -1,6 +1,8 @@
 package com.jpanotesproject.businesslogic;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import com.jpanotesproject.daos.UserDAO;
 import com.jpanotesproject.model.Note;
@@ -10,7 +12,7 @@ public class UserController {
 
 	private static UserController instance = null;
 
-	private static EntityManager em;
+	private static EntityManager em = null;
 	private static UserDAO uDAO;
 
 	private UserController() {

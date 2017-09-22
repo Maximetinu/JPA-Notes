@@ -1,6 +1,8 @@
 package com.jpanotesproject.businesslogic;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 
 import com.jpanotesproject.daos.NoteDAO;
 import com.jpanotesproject.model.Note;
@@ -12,7 +14,7 @@ public class NoteController {
 
 	private static NoteController instance = null;
 
-	private static EntityManager em;
+	private static EntityManager em = null;
 	private static NoteDAO nDAO;
 
 	private NoteController() {
@@ -47,6 +49,7 @@ public class NoteController {
 		em.getTransaction().begin();
 		try {
 			note = new TextNote(author, title, text);
+			em.persist(note);
 		} catch (Exception e) {
 			e.getMessage();
 		}
