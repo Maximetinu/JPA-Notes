@@ -17,7 +17,7 @@ Starting from the basis of "An User can take a Note and label it with some Tags"
 ### License
 Non-Profit Open Software License version 3.0 (NPOSL-3.0) https://opensource.org/licenses/NPOSL-3.0
 
-### Initial Class Diagram
+### Class Diagram
 
 ![Class diagram](https://raw.githubusercontent.com/Maximetinu/JPA-Notes/master/JPA%20Notes%20Project/Diagrams/Class%20Diagram1.jpg)
 
@@ -30,3 +30,8 @@ Non-Profit Open Software License version 3.0 (NPOSL-3.0) https://opensource.org/
 ![Screenshot 4](https://raw.githubusercontent.com/Maximetinu/JPA-Notes/master/JPA%20Notes%20Project/screenshots/screenshot4.png)
 ![Screenshot 5](https://raw.githubusercontent.com/Maximetinu/JPA-Notes/master/JPA%20Notes%20Project/screenshots/screenshot5.png)
 
+
+### Database
+
+![Domain conceptual schema](https://raw.githubusercontent.com/Maximetinu/JPA-Notes/master/Diagrams/Domainconceptualschema.jpg)
+![Screenshot 6](https://raw.githubusercontent.com/Maximetinu/JPA-Notes/master/JPA%20Notes%20Project/screenshots/screenshot6.png)
