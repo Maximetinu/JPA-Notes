@@ -10,6 +10,12 @@ Starting from the basis of "An User can take a Note and label it with some Tags"
 * Developed with Eclipse EE with Eclipselink
 * Project for Software Architectures And Methodologies (SWAM), Università degli Studi di Firenze - UniFI
 
+### Usage
+1. Open JPA Notes Project folder with EclipseEE as a project. Eclipselink dependencies will be lost.
+2. From the Navigator or Project explorer, right-click the Java project and then select Configure > Convert to JPA Project. The Project Facets page of the Modify Faceted Project wizard appears.
+3. Launch MySQL database in `jdbc:mysql://localhost:3306/notesdb"/` with `username = "root"` and `password = ""`
+
+All dependencies should work also with another JPA implementations as Hibernate, as we were careful to use only standard specification annotations and properties. The only excepction is the property `eclipselink.logging.level` in Persistence.xml. **Should work but not tested.**
 
 ### Authors
 - [Javier Izquierdo Vera (Lifka)](https://github.com/Lifka/) - [javierizquierdovera@gmail.com](mailto:javierizquierdovera@gmail.com)
