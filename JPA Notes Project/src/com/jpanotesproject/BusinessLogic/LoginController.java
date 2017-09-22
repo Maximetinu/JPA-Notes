@@ -11,9 +11,7 @@ public class LoginController {
 	
 	private static LoginController instance = null;
 
-
-	private static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JPA Notes Project");
-	private static EntityManager em = emfactory.createEntityManager();
+	private static EntityManager em = EntityManagerController.getEntityManager();
 	private static UserDAO uDAO  = new UserDAO(em);;
 	
 	private LoginController() {

@@ -17,8 +17,7 @@ public class NoteController {
 	private static NoteController instance = null;
 
 
-	private static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JPA Notes Project");
-	private static EntityManager em = emfactory.createEntityManager();
+	private static EntityManager em = EntityManagerController.getEntityManager();
 	private static NoteDAO nDAO  = new NoteDAO(em);
 	
 	private NoteController() {

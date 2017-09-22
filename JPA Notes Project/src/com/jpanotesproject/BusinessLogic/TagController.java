@@ -14,8 +14,7 @@ public class TagController {
 	private static TagController instance = null;
 
 
-	private static EntityManagerFactory emfactory = Persistence.createEntityManagerFactory("JPA Notes Project");
-	private static EntityManager em = emfactory.createEntityManager();
+	private static EntityManager em = EntityManagerController.getEntityManager();
 	private static TagDAO tDAO  = new TagDAO(em);;
 	
 	private TagController() {
