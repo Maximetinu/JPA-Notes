@@ -6,6 +6,6 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ LoginControllerTest.class, NoteControllerTest.class, TagControllerTest.class, UserControllerTest.class })
-public class AllTests {
+public class AllTestsBusinessLogic {
 
 }
