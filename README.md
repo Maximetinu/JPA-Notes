@@ -1,13 +1,12 @@
 # JPA Notes
 
-This project is a simulation of a Java EE application using the JPA architecture, but abstracting from the top level user interface layer and focusing in the Domain Model and DAOs. We will perform an application of notes using Java Persistence API, focusing on the domain logic and mapping the classes defined in the design step with the database through JPA annotations.
+This project is a simulation of a Java EE application using the JPA architecture, but abstracting from the top level user interface layer and focusing in the Domain Model and DAOs.
 
-The application will be similar to Google Keep, although obviously simpler, and without making the presentation layer. We will design the domain logic, maintain persistence through the JPA Entity Manager. To interact with the data will be used DAOs, and we will create controllers as the business logic layer. The following sections describe the features.
-
+Starting from the basis of "An User can take a Note and label it with some Tags", this project simulates the developing steps of a software. In the section architecture requirements, we had "Use JPA to mapping java objects to MySQL database" as restriction, so from then on, we continued specifying how our Java objects will be mapped to a traditional MySQL database by using JPA. We have focused on separating the responsabilities into three main layers: Model, DAOs and Business Logic. The DAOs are the only ones accessing directly to the database through the EntityManager.
 
 ### Notes
 * Developed with Eclipse EE with Eclipselink
-* Project for Università degli Studi di Firenze - UniFI
+* Project for Software Architectures And Methodologies (SWAM), Università degli Studi di Firenze - UniFI
 
 
 ### Authors
