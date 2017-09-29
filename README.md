@@ -20,6 +20,7 @@ All dependencies should work also with another JPA implementations as Hibernate,
 ### Authors
 - [Javier Izquierdo Vera (Lifka)](https://github.com/Lifka/) - [javierizquierdovera@gmail.com](mailto:javierizquierdovera@gmail.com)
 - [Miguel Medina Ballesteros (Maximetinu)](https://github.com/Maximetinu/) - [maximetinu@gmail.com](mailto:maximetinu@gmail.com)
+- Docente: [Prof. Enrico Vicario](http://www.dsi.unifi.it/~vicario/) - [enrico.vicario@unifi.it](mailto:enrico.vicario@unifi.it)
 
 
 ### License
