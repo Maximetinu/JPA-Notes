@@ -31,7 +31,7 @@ Non-Profit Open Software License version 3.0 (NPOSL-3.0) https://opensource.org/
 ![Class diagram](https://github.com/Maximetinu/JPA-Notes/blob/master/Diagrams/JPAArchitecture.png?raw=true)
 
 
-### Class Diagram
+### Class Diagram of Model
 
 ![Class diagram](https://raw.githubusercontent.com/Maximetinu/JPA-Notes/master/Diagrams/Class%20Diagram1.jpg)
 
